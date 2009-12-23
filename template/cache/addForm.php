@@ -4,7 +4,7 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<form action="/intern/news/add/1" method="post">
+<form action="http://impeesa/intern/news/edit/" method="post">
 	<ul class="errorMsg">
 		
 	</ul>
@@ -13,23 +13,23 @@
 		<legend>Optionen</legend>
 		
 		<label for="startDate">Startzeit</label>
-		<input type="text" name="startDate" value="16.12.2009 - 20:08" /> (Format: d.m.Y - H:i)<br/>
+		<input type="text" name="startDate" value="16.12.2009 - 19:31" /> (Format: d.m.Y - H:i)<br/>
 		
 		<label for="endDate">Endzeit</label>
-		<input type="text" name="endDate" value="0" /> (Format: d.m.Y - H:i;0=kein Ende)<br/>
+		<input type="text" name="endDate" value="01.01.1970 - 01;00" /> (Format: d.m.Y - H:i;0=kein Ende)<br/>
 		
 		<label for="tags">Schlagworte</label>
-		<input type="text" name="tags" value="" /> (Mit Komme getrennt)<br/>
+		<input type="text" name="tags" value="TestTag, Noch ein Test,  Blog,  Yeeehaa" /> (Mit Komme getrennt)<br/>
 	</fieldset>
 	
 	<fieldset id="newsSetContent">
 		<legend>Inhalt</legend>
 		
 		<label for="newsHeadline">Überschrift</label>
-		<input type="text" name="newsHeadline" value="" /><br/>
+		<input type="text" name="newsHeadline" value="Jaja" /><br/>
 		
 		<label for="newsContent">&nbsp;</label>
-		<textarea name="newsContent"></textarea>
+		<textarea name="newsContent">Ach Keine Ahnung!!</textarea>
 	</fieldset>
 	
 	<fieldset>

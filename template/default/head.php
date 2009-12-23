@@ -10,6 +10,7 @@
 	<title>{title}</title>
 	{meta}
 	{css}
-	<script type="text/javascript" src="http://impeesa/template/default/js/jquery.js"></script>
+	<!-- <script type="text/javascript" src="http://impeesa/template/default/js/jquery.js"></script>-->
 	{js}
+	<script type="text/javascript" src="http://impeesa/extension/impeesaNews/template/js/news.display.js"></script>
 </head>

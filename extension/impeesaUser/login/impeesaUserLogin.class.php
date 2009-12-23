@@ -5,12 +5,13 @@
 // +----------------------------------------------------------------------+
 include_once(PATH_CORE_UTIL."IExtension.class.php");
 
-class impeesaUserLogin extends user implements IExtension 
+class impeesaUserLogin implements IExtension 
 {
 	
 	public function drawExtension($pageId, $contentid)
 	{
 		$tpl		= impeesaTemplate::getInstance();
+		$user		= new ImpeesaUser();
 		
 		if(isset($_SESSION['userId']) && $contentid != "-1")
 		{
@@ -33,7 +34,7 @@ class impeesaUserLogin extends user implements IExtension
 			}
 			else
 			{
-				$this->setSession($this->getUserIdByName($_POST['username']));
+				$this->setSession($user->getUserIdByName($_POST['username']));
 				
 				@header("location: ".$_POST['route']);
 			}
@@ -42,12 +43,14 @@ class impeesaUserLogin extends user implements IExtension
 	
 	private function checkForm($username, $password)
 	{
-		if($this->getUserIdByName($username) === false)
+		$user	= new ImpeesaUser();
+		
+		if($user->existUsername($username) === false)
 		{
 			return false;
 		}
 		
-		if($this->getPassword($this->getUserIdByName($username)) === md5($password))
+		if($user->getPassword($user->getUserIdByName($username)) === md5($password))
 		{
 			return true;
 		}

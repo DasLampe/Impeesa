@@ -4,4 +4,7 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
+<div id="dialog" style="display:none;">
+
+</div>
 {newsBoxes}

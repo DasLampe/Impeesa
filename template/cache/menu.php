@@ -6,6 +6,6 @@
 ?>
 <div class="menu">
 	<ul>
-		<li><a href="/gruppen">Gruppen</a></li><li><a href="/home">Startseite</a></li><li><a href="/news">News</a></li><li><a href="/login">Login</a></li>
+		<li><a href="/intern/home">Adminbereich</a></li><li><a href="/intern/news">News</a></li><li><a href="/intern/logout">Logout</a></li>
 	</ul>
 </div>

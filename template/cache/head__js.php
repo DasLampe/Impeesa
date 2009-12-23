@@ -4,4 +4,4 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<script type="text/javascript" src="http://impeesa/template/default/js/jquery.js"></script>
+<script type="text/javascript" src="http://impeesa/template/default/js/ui/ui.core.js"></script>

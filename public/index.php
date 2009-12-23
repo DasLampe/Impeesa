@@ -13,17 +13,6 @@ if(empty($_GET['file']))
 //Boot Datei laden
 require_once("../core/config.php");
 
-//Core Klassen
-require_once(PATH_CORE_CLASS."siteConfig.class.php");
-require_once(PATH_CORE_CLASS."template.class.php");
-require_once(PATH_CORE_CLASS."db.class.php");
-require_once(PATH_CORE_CLASS."rights.class.php");
-require_once(PATH_CORE_VIEW."defaultView.class.php");
-require_once(PATH_CORE_VIEW."exceptionView.class.php");
-require_once(PATH_CORE_EXCEPTION."error404Exception.class.php");
-require_once(PATH_CORE_EXCEPTION."errorRightsException.class.php");
-require_once(PATH_CORE_UTIL."ImpeesaHelper.class.php");
-
 $db	= ImpeesaDb::getConnection();
 
 $controller			= "pageController";

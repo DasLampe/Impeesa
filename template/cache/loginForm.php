@@ -15,7 +15,7 @@
 <label for="password">Passwort:</label>
 <input type="password" name="password" value="" /><br/>
 
-<input type="hidden" name="route" value="/intern/news/add" />
+<input type="hidden" name="route" value="/intern/home" />
 
 <input type="submit" name="submit" value="Login" />
 </form>

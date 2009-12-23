@@ -4,4 +4,4 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<link type="text/css" rel="stylesheet" href="http://impeesa/template/default/css/form.css" />
+<link type="text/css" rel="stylesheet" href="http://impeesa/template/default/css/jquery-ui.css" />

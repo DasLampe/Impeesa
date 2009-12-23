@@ -108,15 +108,18 @@ class newsTags {
 		{
 			for($x=0;$x<count($row);$x++)
 			{
-				$tag	.= ", ".$db->fetchOne("SELECT tag FROM ".MYSQL_PREFIX."news_tags WHERE id = '".$row[$x]['tagId']."'");
+				if(!empty($tag))
+				{
+					$tag	.= ", ";
+				}
+				$tag	.= $db->fetchOne("SELECT tag FROM ".MYSQL_PREFIX."news_tags WHERE id = '".$row[$x]['tagId']."'");
 			}
 		}
 		
-		/*while($row	= $db->fetchRow("SELECT tagId FROM ".MYSQL_PREFIX."news_tags_affiliation WHERE newsId = ?", $newsId))
+		if(empty($tag))
 		{
-			echo $row;
-			echo '|';
-		}*/
+			$tag	= "Keine";
+		}
 		return $tag; 
 	}
 }

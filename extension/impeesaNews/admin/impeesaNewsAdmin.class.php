@@ -7,9 +7,13 @@ include_once(PATH_CORE_UTIL."IExtension.class.php");
 
 class impeesaNewsAdmin implements IExtension
 {
-	private $newsAdd;
-	private $newsDelete;
-	private $newsEdit;
+	private $newsTags;
+	
+	public function __construct()
+	{
+		include_once("lib/newsTags.class.php");
+		$this->newsTags	= new newsTags();
+	}
 	
 	public function drawExtension($pageId, $contentid)
 	{
@@ -31,7 +35,7 @@ class impeesaNewsAdmin implements IExtension
 					$return = $this->mainDel();
 					break;
 				case 'edit':
-					$return = $this->mainEdit();
+					$return = $this->mainEdit($action[2]);
 					break;
 				default:
 					$return = $this->mainNews();
@@ -45,7 +49,7 @@ class impeesaNewsAdmin implements IExtension
 		return $return;
 	}
 	
-	private function mainAdd()
+	public function mainAdd()
 	{
 		include_once(dirname(__FILE__)."/lib/newsAdd.class.php");
 		$this->newsAdd	= new newsAdd();
@@ -96,7 +100,7 @@ class impeesaNewsAdmin implements IExtension
 			if(isset($_POST['submit']))
 			{
 				$data	= array(
-								"formAction"		=> $_GET['file'],
+								"formAction"		=> "http://impeesa/intern/news/add/",
 								"errorMsg"			=> $error_msg,
 								"startDate" 		=> $_POST['startDate'],
 								"endDate"			=> $_POST['endDate'],
@@ -108,7 +112,7 @@ class impeesaNewsAdmin implements IExtension
 			else
 			{
 				$data	= array(
-								"formAction"		=> $_GET['file']."/1",
+								"formAction"		=> "http://impeesa/intern/news/add/",
 								"errorMsg"			=> $error_msg,
 								"startDate"			=> date("d.m.Y - H:i"),
 								"endDate"			=> "0",
@@ -146,6 +150,52 @@ class impeesaNewsAdmin implements IExtension
 	private function mainNews()
 	{
 		echo 'Jaja';
+	}
+	
+	public function mainEdit($newsId)
+	{
+		include_once(dirname(__FILE__)."/lib/newsEdit.class.php");
+		$this->newsEdit	= new newsEdit($newsId);
+		$tpl			= impeesaTemplate::getInstance();
+		
+		$data	= $this->newsData($newsId);
+		
+		//Setzte Inhalt für Template Variablen
+		if(isset($_POST['submit']))
+		{
+			$data	= array(
+							"formAction"		=> "http://impeesa/intern/news/edit/",
+							"errorMsg"			=> $error_msg,
+							"startDate" 		=> $_POST['startDate'],
+							"endDate"			=> $_POST['endDate'],
+							"tags"				=> $_POST['tags'],
+							"newsHeadline"		=> $_POST['newsHeadline'],
+							"newşContent"		=> $_POST['newsContent']
+							);
+		}
+		else
+		{
+			$data	= array(
+							"formAction"		=> "http://impeesa/intern/news/edit/",
+							"errorMsg"			=> $error_msg,
+							"startDate"			=> date("d.m.Y - H:i", $data['startDate']),
+							"endDate"			=> date("d.m.Y - H;i", $data['endDate']),
+							"tags"				=> $this->newsTags->getTagsByNewsId($data['id']),
+							"newsHeadline"		=> $data['newsHeadline'],
+							"newşContent"		=> $data['newsContent']
+							); 
+		}
+		
+		//Fülle Template Variablen
+		$data_key	= array_keys($data);
+		$data_value	= array_values($data);
+		for($i=0;$i<count($data);$i++)
+		{
+			$tpl->vars($data_key[$i], $data_value[$i]);
+		}
+		
+		//Gebe Template zurück
+		return $tpl->load("addForm", 0, PATH_EXTENSION."impeesaNews/template/admin/");
 	}
 	
 	/**
@@ -207,4 +257,12 @@ class impeesaNewsAdmin implements IExtension
 
 		return $date;
 	}
+	
+	private function newsData($newsId)
+	{
+		$db			= ImpeesaDb::getConnection();
+		$row		= $db->fetchRow("SELECT id, newsHeadline, newsContent, startDate, endDate, userId FROM ".MYSQL_PREFIX."news_content WHERE id = ?", array($newsId));
+		
+		return $row;
+	} 
 }

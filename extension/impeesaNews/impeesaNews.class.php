@@ -19,6 +19,8 @@ class impeesaNews implements IExtension
 	{
 		$tpl		= impeesaTemplate::getInstance();
 		
+		$tpl->addJs("template/default/js/ui/ui.dialog.js");
+		$tpl->addJs("template/default/js/ui/ui.draggable.js");
 		$tpl->vars("newsBoxes", $this->getNews());
 		
 		return $tpl->load("listNews", 0, PATH_EXTENSION."impeesaNews/template/");
@@ -26,21 +28,36 @@ class impeesaNews implements IExtension
 	
 	private function getNews()
 	{
-		$tpl		= impeesaTemplate::getInstance();
 		$db			= ImpeesaDb::getConnection();
 		$newsBoxes	= "";
 		
 		//print_r($db->fetchAssoc("SELECT id, newsHeadline, newsContent FROM ".MYSQL_PREFIX."news_content WHERE endDate = 0 OR endDate >= '".time()."'"));
-		$row	= $db->fetchAll("SELECT id, newsHeadline, newsContent FROM ".MYSQL_PREFIX."news_content WHERE endDate = 0 OR endDate >= '".time()."'");
+		$row	= $db->fetchAll("SELECT id, newsHeadline, newsContent FROM ".MYSQL_PREFIX."news_content WHERE endDate = ? OR endDate >= ?", array(0, time()));
 		for($x=0;$x<count($row);$x++)
 		{
-			$tpl->vars("newsHeadline",	$row[$x]['newsHeadline']);
-			$tpl->vars("newsContent",	$row[$x]['newsContent']);
-			$tpl->vars("newsTags",		$this->newsTags->getTagsByNewsId($row[$x]['id']));
-			
-			$newsBoxes	.= $tpl->load("_newsBox", 0, PATH_EXTENSION."impeesaNews/template/");
+			$newsBoxes	.= $this->getNewsTpl($row[$x]);
 		}
 		
 		return $newsBoxes;
+	}
+	
+	/**
+	 * Schreib News in _newsBox (Template)
+	 * @param array $row
+	 * @return string (Template)
+	 */
+	private function getNewsTpl($row)
+	{
+		$user		= new ImpeesaUser();
+		$tpl		= impeesaTemplate::getInstance();
+		
+		$tpl->vars("newsEditLink",		LINK_MAIN."intern/news/edit/");
+		$tpl->vars("newsId",			$row['id']);
+		$tpl->vars("editUserRights",	$user->isLogin());
+		$tpl->vars("newsHeadline",		$row['newsHeadline']);
+		$tpl->vars("newsContent",		$row['newsContent']);
+		$tpl->vars("newsTags",			$this->newsTags->getTagsByNewsId($row['id']));
+		
+		return $tpl->load("_newsBox", 0, PATH_EXTENSION."impeesaNews/template/");
 	}
 }

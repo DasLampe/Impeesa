@@ -4,4 +4,4 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<li><a href="/login">Login</a></li>
+<li><a href="/intern/logout">Logout</a></li>

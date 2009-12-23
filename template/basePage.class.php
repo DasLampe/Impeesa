@@ -33,7 +33,10 @@ abstract class BasePage
 		
 		$tpl->addCss("template/default/css/style.css");
 		$tpl->addCSS("template/default/css/form.css");
-		$tpl->addJs("template/default/js/jquery.js");
+		$tpl->addCss("template/default/css/jquery-ui.css");
+		$tpl->addJs("template/default/js/jquery.js",1);
+		$tpl->addJs("template/default/js/jquery-ui.js",1);
+		$tpl->addJs("template/default/js/ui/ui.core.js",1);
 		$tpl->vars("title", $this->getTitle());
 		$tpl->vars("meta",	$this->getMeta());
 		$tpl->vars("css",	$this->getCss());
@@ -45,6 +48,7 @@ abstract class BasePage
 	protected function drawBody()
 	{
 		$tpl	= impeesaTemplate::getInstance();
+		$user	= new impeesaUser();
 		
 		$tpl->vars("header", "Header");
 		$tpl->vars("menu", $this->menu());		
@@ -124,11 +128,12 @@ abstract class BasePage
 		$tpl	= impeesaTemplate::getInstance();
 		
 		if(!empty($tpl->js))
-		{		
+		{
+			array_multisort($tpl->js, SORT_ASC);			
 			$js		= "";
 			foreach($tpl->js as $js_file)
 			{
-				$tpl->vars("js_file", $js_file);
+				$tpl->vars("js_file", $js_file['file']);
 				$js	.= $tpl->load("head/_js", 0);
 			}
 			return $js;
