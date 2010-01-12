@@ -24,12 +24,10 @@ class ImpeesaDb {
 		{
 			try
 			{
-				self::$db = Zend_Db::factory('Pdo_Mysql', array(
-	                                                   'host'     => MYSQL_HOST,
-	                                                   'username' => MYSQL_USER,
-	                                                   'password' => MYSQL_PASS,
-	                                                   'dbname'   => MYSQL_DB
-	            ));
+				self::$db = new PDO("mysql:host=".MYSQL_HOST.";
+										dbname=".MYSQL_DB,
+										MYSQL_USER,
+										MYSQL_PASS);
 			}
 			catch(Exeptions $e)
 			{

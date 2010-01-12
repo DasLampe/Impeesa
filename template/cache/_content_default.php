@@ -4,7 +4,4 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<h1>Fehler - 404</h1>
-<p>
-Leider existiert die angeforderte Seite nicht!
-</p>
+<h1>Was geht ab?!</h1>

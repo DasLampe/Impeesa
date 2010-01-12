@@ -13,6 +13,6 @@
 	<h2>Ajax Test</h2>
 	<p>
 		Mal sehen!<br/>
-		Tags: , Ajax
+		Tags: Ajax
 	</p>
 </div>
