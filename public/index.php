@@ -1,38 +1,46 @@
 <?php
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2009 DasLampe <andre@lano-crew.org> |
+// | Copyright (c) 2010 DasLampe <andre@lano-crew.org> |
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
-ob_start();
+include_once("../config/config.php");
+include_once(PATH_LIB."impeesa/impeesaDB.class.php");
+include_once(PATH_LIB."impeesa/impeesaTemplate.class.php");
+include_once(PATH_LIB."impeesa/impeesaConfig.class.php");
+include_once(PATH_LIB."impeesa/impeesaHelper.class.php");
+include_once(PATH_CONTROLLER."pageController.class.php");
+include_once(PATH_CONTROLLER."resourceController.class.php");
 
-if(empty($_GET['file']))
+$impeesaHelper	= new impeesaHelper();
+
+if(isset($_GET['action']) && $_GET['action'] == "content")
 {
-	header("location: /home");
+	if(isset($_GET['site']))
+	{
+		if($impeesaHelper->existSite($_GET['site']) === false)
+		{
+			echo '404 Fehler!';
+		}
+		else
+		{
+			$pageController	= new pageController($_GET['site']);
+		}
+	}
+	else
+	{
+		header("Location: index.php?action=content&site=home");
+	}
 }
-
-//Boot Datei laden
-require_once("../core/config.php");
-
-$db	= ImpeesaDb::getConnection();
-
-$controller			= "pageController";
-$pageId				= impeesaHelper::getPageId($_GET['file']);
-
-if(impeesaHelper::getForward($pageId) !== false)
+elseif(isset($_GET['action']) && $_GET['action']=="feed")
 {
-	header("location: ".impeesaHelper::getForward($pageId));
+	echo 'Feed!';
 }
-
-try
+elseif(isset($_GET['action']) && $_GET['action']=="resource")
 {
-	require_once(PATH_CORE_CONTROLLER.$controller.".class.php");
-	$controller		= new $controller;
-	$controller->executeController($pageId);
+	$resourceController	= new resourceController($_GET['file']);
 }
-catch (Exception $e)
+else
 {
-	echo $e->getMessage();
-	$view	= new exceptionView($e->getContent());
-	$view->handle();
+	echo 'Es konnte keine Seite aufgerufen werden!<br>Fehlermeldung senden!';
 }
-ob_end_flush();
+?>

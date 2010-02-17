@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+body {
+	background-color: #999999;
+}
+
+#hp {
+	background-color: #FFFFFF;
+}
+
+#menu a, #menu a:hover {
+	color: #000000;
+}
+
+#content h1 {
+	color: #a04652;
+}
