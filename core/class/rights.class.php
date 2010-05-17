@@ -3,9 +3,11 @@
 // | Copyright (c) 2009 DasLampe <andre@lano-crew.org> |
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
-class rights
+include_once(PATH_CORE_CLASS."user.class.php");
+
+class rights extends user
 {
-	public function isAdmin($userId)
+	protected function isAdmin($userId)
 	{
 		$db		= impeesaDb::getConnection();
 		if($db->fetchOne("SELECT admin FROM ".MYSQL_PREFIX."user WHERE id = ?", array($userId)) > '0')
@@ -21,19 +23,18 @@ class rights
 	public function pageview($pageId)
 	{
 		$db		= impeesaDb::getConnection();
-		$user	= new ImpeesaUser();
-				
+		$userId	= $this->getUserId();		
 		$return	= false;
 
 		$pageId	= $this->inheritPageRights($pageId);
 		
-		if($this->isAdmin($user->getUserId()) === true)
+		if($this->isAdmin($userId) === true)
 		{
 			$return = true;
 		}
 		else
 		{
-			foreach($user->getUserGroups() as $groupId)
+			foreach($this->getUserGroups($userId) as $groupId)
 			{
 				if($db->fetchOne("SELECT right_read FROM ".MYSQL_PREFIX."page_rights WHERE groupid = ? AND pageId = ?", array($groupId[@groupid],$pageId)) == 1)
 				{

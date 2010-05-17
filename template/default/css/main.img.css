@@ -1,35 +1,30 @@
 @CHARSET "UTF-8";
 
 #header_left {
-	background-image: url("http://impeesa/index.php?action=resource&file=template/default/img/dpsg_logo.jpg");
+	background-image: url("/resource/template-default-img-dpsg_logo.jpg");
 	background-repeat: no-repeat;
 }
 
 #header_right {
-	background-image: url("http://impeesa/index.php?action=resource&file=template/default/img/banner_stammtenkterer.jpg");
+	background-image: url("/resource/template-default-img-banner_stammtenkterer.jpg");
 	background-repeat: no-repeat;
 }
 
-#menu a {
-	background-image: url("http://impeesa/index.php?action=resource&file=template/default/img/a_link.gif");
+.menu a {
+	background-image: url("/resource/template-default-img-a_link.gif");
 	background-repeat: no-repeat;
 }
 
-#menu a:hover {
-	background-image: url("http://impeesa/index.php?action=resource&file=template/default/img/a_hover.gif");
+.menu a:hover {
+	background-image: url("/resource/template-default-img-a_hover.gif");
 	background-repeat: no-repeat;
 }
 
-#content h1 {
-	background-image: url("http://impeesa/index.php?action=resource&file=template/default/img/h1.jpg");
-	background-repeat: no-repeat;
-}
+/*#content ul {
+	list-style-image: url("/resource/template-default-img-list_icon.gif");
+}*/
 
-#content ul {
-	list-style-image: url("http://impeesa/index.php?action=resource&file=template/default/img/list_icon.gif");
-}
-
-#content h2 {
-	background-image: url("http://impeesa/index.php?action=resource&file=template/default/img/news_back.jpg");
-	background-repeat: repeat-y;
+#content h2, table {
+	background-image: url("/resource/template-default-img-news_back.png");
+	background-repeat: repeat-x;
 }

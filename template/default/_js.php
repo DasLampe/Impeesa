@@ -4,4 +4,4 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-123
+<script language="JavaScript" type="text/javascript" src="{LINK_MAIN}resource/{js_file}"></script>

@@ -6,22 +6,33 @@
 ?>
 <html>
 <head>
-<title>Impeesa!</title>
-</head>
+<title>Impeesa! - {pageTitle}</title>
 {css}
 {js}
+</head>
 <body>
+<div id="dialog" style="display:none;"></div>
+<div id="dialog-action" style="display:none;"></div>
 <div id="hp">
 	<div id="header">
 		<div id="header_left"></div>
 		<div id="header_right"></div>
 	</div>
 	<div id="navi_left">
-		<div id="menu">Menü</div>
-		<div id="menu">Menü 2</div>
+		<ul id="menuLeft">
+			{naviLeft}
+		</ul>
 	</div>
 	<div id="content">
+		{if}{submenu} != ""{/if}
+		<ul>
+			{submenu}
+		</ul>
+		{/endif}
 		{pageContent}
+	</div>
+	<div id="footer">
+		&copy; <a href="http://andreflemming.de" class="no_dec">André Flemming</a> | <a href="{LINK_MAIN}content/login/">{logInOut}</a> | <a href="{LINK_MAIN}acp/">Adminbereich</a>
 	</div>
 </div>
 </body>

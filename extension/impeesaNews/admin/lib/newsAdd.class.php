@@ -3,17 +3,8 @@
 // | Copyright (c) 2009 DasLampe <andre@lano-crew.org> |
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
-include_once("newsTags.class.php");
-
-class newsAdd extends impeesaNewsAdmin
+class newsAdd
 {
-	private $newsTags;
-	
-	public function __construct()
-	{
-		$this->newsTags = new newsTags();
-	}
-	
 	/**
 	 * Überprüfen ob Einträge aus Array leer sind, wenn leer = false
 	 * Array => newsHeadline, newsContent, startDate
@@ -32,30 +23,10 @@ class newsAdd extends impeesaNewsAdmin
 		}
 	}
 	
-	public function add2DB($data)
+	public function endDate($startDate, $endDate)
 	{
-		$db		= impeesaDB::getConnection();
-		
-		//Datum in Unix-Timestap konventieren
-		$startDate	= $this->convertDate($data['startDate']);
-		$endDate	= 0;
-		if($data['endDate'] != 0)
-		{ //Wenn Endzeit nicht unendlich
-			$endDate	= $this->convertDate($data['endDate']);
-		}
-		
-		//Daten eintragen
-		$sql_data	= array(
-							'newsContent'	=> $data['newsContent'],
-							'newsHeadline'	=> $data['newsHeadline'],
-							'startDate'		=> $startDate,
-							'endDate'		=> $endDate,
-							'userId'		=> $_SESSION['userId']
-							);
-		if($db->insert(MYSQL_PREFIX."news_content", $sql_data))
+		if($endDate	== "0")
 		{
-			//Tags in Datenbank eintragen
-			$this->newsTags->countUpTags($data['tags'], $db->lastInsertId(MYSQL_PREFIX.'newsContent'));
 			return true;
 		}
 		else

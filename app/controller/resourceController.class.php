@@ -8,6 +8,7 @@ class resourceController
 	public function __construct($file)
 	{
 		//$file	= explode("/", $file);
+		$file	= str_replace("-", "/", $file);
 		$type	= $this->getHeaderType($file);
 
 		if(file_exists(PATH_MAIN.$file))

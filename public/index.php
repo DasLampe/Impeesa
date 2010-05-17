@@ -3,41 +3,116 @@
 // | Copyright (c) 2010 DasLampe <andre@lano-crew.org> |
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
-include_once("../config/config.php");
-include_once(PATH_LIB."impeesa/impeesaDB.class.php");
-include_once(PATH_LIB."impeesa/impeesaTemplate.class.php");
-include_once(PATH_LIB."impeesa/impeesaConfig.class.php");
-include_once(PATH_LIB."impeesa/impeesaHelper.class.php");
-include_once(PATH_CONTROLLER."pageController.class.php");
-include_once(PATH_CONTROLLER."resourceController.class.php");
+/*
+ * Includiere und lade Klassen, Hilfswerkzeuge, ect.
+ */
+require_once("../config/config.php");
+require_once(PATH_CLASS."impeesaDB.class.php");
+require_once(PATH_CLASS."impeesaTemplate.class.php");
+require_once(PATH_CLASS."impeesaConfig.class.php");
+require_once(PATH_CLASS."impeesaHelper.class.php");
+require_once(PATH_CLASS."impeesaUser.class.php");
+require_once(PATH_CLASS."impeesaUserRights.class.php");
+require_once(PATH_CLASS."impeesaException.class.php");
+require_once(PATH_CLASS."impeesaMenu.class.php");
+require_once(PATH_CLASS."impeesaLog.class.php");
+require_once(PATH_IMPLEMENTS."IExtension.php");
+
+require_once(PATH_EXTENSION."impeesaUser/info/impeesaUserInfo.class.php");
 
 $impeesaHelper	= new impeesaHelper();
 
-if(isset($_GET['action']) && $_GET['action'] == "content")
+/*
+ * GET in Array packen
+ */
+$param	= explode("/", $_GET['get']);
+
+/*
+ * Eigentlicher Controller
+ */
+if(isset($param[0]) && $param[0] == "content")
 {
-	if(isset($_GET['site']))
+	if(isset($param[1]) && !isset($_SERVER['HTTP_X_REQUESTED_WITH']))
 	{
-		if($impeesaHelper->existSite($_GET['site']) === false)
+		if($impeesaHelper->existSite($param[1]) === false)
 		{
 			echo '404 Fehler!';
 		}
 		else
 		{
-			$pageController	= new pageController($_GET['site']);
+			include_once(PATH_CONTROLLER."pageController.class.php");
+			$pageController	= new pageController($param[1]);
+		}
+	}
+	elseif(isset($_SERVER['HTTP_X_REQUESTED_WITH']))
+	{
+		if($impeesaHelper->existSite($param[1]) === false)
+		{
+			echo 'Fehler bei der Abfrage!';
+		}
+		else
+		{
+			include_once(PATH_CONTROLLER."ajaxController.class.php");
+			if(isset($_POST['dataType']) && $_POST['dataType'] == "json")
+			{
+				header('Content-type: text/json');
+			}
+			$ajaxController	= new ajaxController($param[1]);
 		}
 	}
 	else
 	{
-		header("Location: index.php?action=content&site=home");
+		header("Location: /content/home");
 	}
 }
-elseif(isset($_GET['action']) && $_GET['action']=="feed")
+elseif(isset($param[0]) && $param[0] == "acp")
 {
-	echo 'Feed!';
+	if(isset($param[1]) && !empty($param[1]) && !isset($_SERVER['HTTP_X_REQUESTED_WITH']))
+	{
+		if($impeesaHelper->existSite($param[1]) === false)
+		{
+			echo $param[1];
+			echo '404 Fehler!';
+		}
+		else
+		{
+			include_once(PATH_CONTROLLER."acpController.class.php");
+			new acpController($param[1]);
+		}
+	}
+	elseif(isset($_SERVER['HTTP_X_REQUESTED_WITH']))
+	{
+		if($impeesaHelper->existSite($param[1]) === false)
+		{
+			echo 'Fehler bei der Abfrage!';
+		}
+		else
+		{
+			include_once(PATH_CONTROLLER."ajaxAcpController.class.php");
+			if(isset($_POST['dataType']) && $_POST['dataType'] == "json")
+			{
+				header('Content-type: text/json');
+			}
+			new ajaxAcpController($param[1]);
+		}
+	}
+	else
+	{
+		header("Location: /acp/home");
+	}
 }
-elseif(isset($_GET['action']) && $_GET['action']=="resource")
+elseif(isset($param[0]) && $param[0] == "feed")
 {
-	$resourceController	= new resourceController($_GET['file']);
+	echo 'feed';
+}
+elseif(isset($param[0]) && $param[0]=="resource")
+{
+	include_once(PATH_CONTROLLER."resourceController.class.php");
+	new resourceController($param[1]);
+}
+elseif(!isset($_GET['get']))
+{
+	header("Location: /content/home/");
 }
 else
 {

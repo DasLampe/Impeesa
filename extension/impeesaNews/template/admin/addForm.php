@@ -25,8 +25,8 @@
 	<fieldset id="newsSetContent">
 		<legend>Inhalt</legend>
 		
-		<label for="newsHeadline">Überschrift</label>
-		<input type="text" name="newsHeadline" value="{newsHeadline}" /><br/>
+		<label for="contentHeadline">Überschrift</label>
+		<input type="text" name="contentHeadline" value="{contentHeadline}" /><br/>
 		
 		<label for="newsContent">&nbsp;</label>
 		<textarea name="newsContent">{newşContent}</textarea>

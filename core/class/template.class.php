@@ -108,7 +108,6 @@ class impeesaTemplate
 	
 	private function replace()
 	{
-		$this->replace_ifs();
 		$this->replace_vars();
 	}
 	
@@ -124,28 +123,6 @@ class impeesaTemplate
 				$this->templateLoad	= str_replace($this->leftDelimiter.$array_key[$x].$this->rightDelimiter, $array_value[$x], $this->templateLoad);
 			}
 		}
-	}
-	
-	private function replace_vars_if($var)
-	{
-		$var	= trim($var);
-		$anhang	= preg_split('/'.$this->leftDelimiter.'(.*)'.$this->rightDelimiter.'/i', $var);
-		
-		$var	= str_replace(array($this->rightDelimiter, $this->leftDelimiter, $anhang[1]), "", $var);
-		$return	= "\$this->vars['".$var."']".$anhang[1];
-		
-		return $return;
-	}
-	
-	private function replace_ifs()
-	{
-		$this->templateLoad		= preg_replace_callback('/'.$this->leftDelimiter.'if'.$this->rightDelimiter.'(.*)'.$this->leftDelimiter.'\/if'.$this->rightDelimiter.'/i', array(&$this, 'controlStructur'), $this->templateLoad);
-		$this->templateLoad		= preg_replace('/'.$this->leftDelimiter.'\/endif'.$this->rightDelimiter.'/i', '<?php } ?>', $this->templateLoad);		
-	}
-	
-	private function controlStructur($arg)
-	{
-		return "<?php if(".$this->replace_vars_if($arg[1]).") { ?>"; 
 	}
 	
 	private function caching($output)
@@ -182,11 +159,8 @@ class impeesaTemplate
 		$this->css[]	= LINK_MAIN . $file;
 	}
 	
-	public function addJs($file, $important=0)
+	public function addJs($file)
 	{
-		$this->js[]		= array(
-								"file" 		=> LINK_MAIN . $file,
-								"important"	=> $important
-								);
+		$this->js[]		= LINK_MAIN . $file;
 	}
 }

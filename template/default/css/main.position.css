@@ -11,7 +11,7 @@ body, html {
 }
 
 #hp {
-	width: 870px;
+	width: 960px;
 	margin-left: auto;
 	margin-right: auto;
 	padding-bottom: 10px;
@@ -43,11 +43,16 @@ body, html {
 	padding-left: 10px;
 }
 
-#menu {
+#menuLeft {
+	list-style-type: none;
+}
+
+.menu {
+	margin-left: -40px;
 	padding: 25px 0 10px 0; /*top right bottom left*/ 
 }
 
-#menu a, #menu a:hover {
+.menu a, .menu a:hover {
 	display: block;
 	height: 25px;
 	width: 150px;
@@ -55,10 +60,9 @@ body, html {
 	margin: 0 0 5px 0;
 	padding-left: 27px;
 	font:bold 15px arial, sans-serif;
-	
 }
 
-#menu a:hover {
+.menu a:hover {
 	font-size: blod;
 }
 
@@ -67,16 +71,26 @@ body, html {
 }
 
 #content h1 {
-	padding: 0 0 0 48px;
 	margin: 10px 0 10px 10px;
 	background-position: 0 6px;
 }
 
 #content h2 {	
 	padding: 0 0 0 5px;
-	margin: 10px 0 10px 0;
+	margin: 10px 0 0px 0;
 }
 
 #content p {
 	margin-left: 25px;
+}
+
+#footer
+{
+	clear: both;
+	position: absolute;
+	bottom: 0;
+	left:0;
+	right:0;
+	text-align: right;
+	padding-right: 10px;
 }

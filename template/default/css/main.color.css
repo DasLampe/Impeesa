@@ -8,10 +8,46 @@ body {
 	background-color: #FFFFFF;
 }
 
-#menu a, #menu a:hover {
+.menu a, .menu a:hover {
 	color: #000000;
 }
 
 #content h1 {
 	color: #a04652;
+}
+
+#content h2 {
+	border: 1px solid #e3e3e3;
+	-moz-border-radius:10px 10px 0 0;
+}
+
+#content h2, #content h2 a{
+	color: #FFFFFF;
+}
+
+#content h2 a {
+	text-decoration: none;
+}
+
+#content a {
+	color: #990000;
+	text-decoration: none;
+}
+
+#content a:hover {
+	text-decoration: underline;
+}
+
+
+table th {
+	color: #FFFFFF;
+}
+
+table td {
+	background-color: #FFFFFF;
+}
+
+#dialog-action {
+	background-color: #003264;
+	color: #FFFFFF;
 }
