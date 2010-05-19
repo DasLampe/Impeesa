@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+
+.newsInfo {
+	color: #000000;
+}
+
+.newsTags {
+	text-decoration: none;
+	color: #990000;
+}
+
+.newsTags:hover {
+	text-decoration: underline;
+}
+
+.newsBox {
+	border: 1px solid #e3e3e3;
+	-moz-border-radius:0 0 10px 10px;
+}

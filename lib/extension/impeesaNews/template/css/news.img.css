@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+/*.newsInfo
+{
+	background-image: url("/resource/template-default-img-infoBg.png");
+	background-repeat: repeat-x;
+}*/
+
+.newsBox
+{
+	background-image: url("/resource/template-default-img-boxContent.png");
+	background-repeat: repeat-x;
+}

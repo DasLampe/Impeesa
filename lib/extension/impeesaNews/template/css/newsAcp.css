@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+
+.newsAction_table {
+	width: 20px;
+}
+
+.newsTitle_table {
+	width: 250px;
+}
+
+.newsAuthor_table {
+	width: 100px;
+}
+
+.newsTags_table {
+	width: 150px;
+}
+
+.newsDate_table {
+	width: 220px;
+}
+
+.newsTable {
+	border-spacing: 0px;
+}
+
+.newsTable td {
+	vertical-align: top;
+	border: 1px solid #000000;
+	height: 65px;
+	padding: 5px;
+}
+
+.newsEditOption {
+	font-size: 0.7em;
+	visibility:hidden;
+}
+
+tr:hover .newsEditOption {
+	visibility:visible;
+}

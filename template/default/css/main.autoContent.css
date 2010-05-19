@@ -1,0 +1,26 @@
+@CHARSET "UTF-8";
+
+#content h1:before, #content h2:before
+{
+	content: "»‹ ";
+}
+
+.error p:before
+{
+	content: url("/resource/template-default-img-error_32x32.png");
+}
+
+.success p:before
+{
+	content: url("/resource/template-default-img-success_32x32.png");
+}
+
+.warning p:before
+{
+	content: url("/resource/template-default-img-warning_32x32.png");
+	float: left;
+}
+
+.linkDel:before {
+	content: url("/resource/template-default-img-delete_10x10.png");
+}
