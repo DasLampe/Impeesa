@@ -13,8 +13,31 @@ class resourceController
 
 		if(file_exists(PATH_MAIN.$file))
 		{
+			if(isset($_SERVER['HTTP_REFERER']))
+			{
+				$referer	= $_SERVER['HTTP_REFERER'];
+			}
+			else
+			{
+				$referer	= LINK_MAIN;
+			}
 			 header("Content-Type: ".$type);
-			 readfile(PATH_MAIN.$file);
+			 //readfile(PATH_MAIN.$file); ---> Old Way
+			 $content		= file_get_contents(PATH_MAIN.$file);
+			 $search		= array(
+			 						"%IMPEESA_MAIN_LINK%",
+			 						"%IMPEESA_CSS_LINK%",
+			 						"%IMPEESA_PARENT%",
+			 						"%IMPEESA_SESSIONID%"
+			 						);
+			 $replace		= array(
+			 						LINK_MAIN,
+			 						LINK_CSS,
+			 						$referer,
+			 						session_id()
+			 						);
+			 $content		= str_replace($search, $replace, $content);
+			 echo $content;
 		}
 		else
 		{

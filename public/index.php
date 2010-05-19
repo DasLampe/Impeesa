@@ -18,7 +18,11 @@ require_once(PATH_CLASS."impeesaMenu.class.php");
 require_once(PATH_CLASS."impeesaLog.class.php");
 require_once(PATH_IMPLEMENTS."IExtension.php");
 
+
+require_once(PATH_CLASS."impeesaDebug.class.php");
 require_once(PATH_EXTENSION."impeesaUser/info/impeesaUserInfo.class.php");
+
+set_error_handler('errorHandler');
 
 $impeesaHelper	= new impeesaHelper();
 
@@ -26,6 +30,8 @@ $impeesaHelper	= new impeesaHelper();
  * GET in Array packen
  */
 $param	= explode("/", $_GET['get']);
+
+impeesaDebug::insert();
 
 /*
  * Eigentlicher Controller
@@ -62,7 +68,7 @@ if(isset($param[0]) && $param[0] == "content")
 	}
 	else
 	{
-		header("Location: /content/home");
+		header("Location: ".LINK_MAIN."content/home");
 	}
 }
 elseif(isset($param[0]) && $param[0] == "acp")
@@ -98,7 +104,7 @@ elseif(isset($param[0]) && $param[0] == "acp")
 	}
 	else
 	{
-		header("Location: /acp/home");
+		header("Location: ".LINK_MAIN."acp/home");
 	}
 }
 elseif(isset($param[0]) && $param[0] == "feed")
@@ -112,7 +118,7 @@ elseif(isset($param[0]) && $param[0]=="resource")
 }
 elseif(!isset($_GET['get']))
 {
-	header("Location: /content/home/");
+	header("Location: ".LINK_MAIN."content/home/");
 }
 else
 {

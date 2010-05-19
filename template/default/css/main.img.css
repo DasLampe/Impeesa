@@ -1,22 +1,22 @@
 @CHARSET "UTF-8";
 
 #header_left {
-	background-image: url("/resource/template-default-img-dpsg_logo.jpg");
+	background-image: url("%IMPEESA_MAIN_LINK%resource/template-default-img-dpsg_logo.jpg");
 	background-repeat: no-repeat;
 }
 
 #header_right {
-	background-image: url("/resource/template-default-img-banner_stammtenkterer.jpg");
+	background-image: url("%IMPEESA_MAIN_LINK%resource/template-default-img-banner_stammtenkterer.jpg");
 	background-repeat: no-repeat;
 }
 
 .menu a {
-	background-image: url("/resource/template-default-img-a_link.gif");
+	background-image: url("%IMPEESA_MAIN_LINK%resource/template-default-img-a_link.gif");
 	background-repeat: no-repeat;
 }
 
 .menu a:hover {
-	background-image: url("/resource/template-default-img-a_hover.gif");
+	background-image: url("%IMPEESA_MAIN_LINK%resource/template-default-img-a_hover.gif");
 	background-repeat: no-repeat;
 }
 
@@ -25,6 +25,6 @@
 }*/
 
 #content h2, table {
-	background-image: url("/resource/template-default-img-news_back.png");
+	background-image: url("%IMPEESA_MAIN_LINK%resource/template-default-img-news_back.png");
 	background-repeat: repeat-x;
 }
