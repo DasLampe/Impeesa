@@ -13,6 +13,8 @@ define("PATH_EXTENSION",		PATH_LIB."extension/");
 define("PATH_APP",				PATH_MAIN."app/");
 define("PATH_CONTROLLER",		PATH_APP."controller/");
 define("PATH_TPL",				PATH_MAIN."template/");
+define("PATH_UPLOAD",			PATH_MAIN."upload/");
+define("PATH_PICTURE",			PATH_UPLOAD."picture/");
 
 if($_SERVER['HTTP_HOST'] == "192.168.2.34")
 {

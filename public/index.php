@@ -116,6 +116,11 @@ elseif(isset($param[0]) && $param[0]=="resource")
 	include_once(PATH_CONTROLLER."resourceController.class.php");
 	new resourceController($param[1]);
 }
+elseif(isset($param[0]) && $param[0] == "picture")
+{
+	include_once(PATH_CONTROLLER."resourceController.class.php");
+	new resourceController("upload-picture-".$param[1]);
+}
 elseif(!isset($_GET['get']))
 {
 	header("Location: ".LINK_MAIN."content/home/");
