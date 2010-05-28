@@ -16,7 +16,6 @@ require_once(PATH_CLASS."impeesaUserRights.class.php");
 require_once(PATH_CLASS."impeesaException.class.php");
 require_once(PATH_CLASS."impeesaMenu.class.php");
 require_once(PATH_CLASS."impeesaLog.class.php");
-require_once(PATH_IMPLEMENTS."IExtension.php");
 
 
 require_once(PATH_CLASS."impeesaDebug.class.php");
@@ -42,6 +41,7 @@ if(isset($param[0]) && $param[0] == "content")
 	{
 		if($impeesaHelper->existSite($param[1]) === false)
 		{
+			header('HTTP/1.1 404 Not Found');
 			echo '404 Fehler!';
 		}
 		else

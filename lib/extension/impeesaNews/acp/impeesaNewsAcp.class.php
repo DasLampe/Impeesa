@@ -5,8 +5,7 @@
 // +----------------------------------------------------------------------+
 require_once(impeesaHelper::dirUp(1, dirname(__FILE__))."impeesaNews.class.php");
 
-class impeesaNewsAcp extends impeesaNews implements IExtension
-{
+class impeesaNewsAcp extends impeesaNews
 	private $tplFolder;
 	
 	public function __construct()
@@ -14,10 +13,6 @@ class impeesaNewsAcp extends impeesaNews implements IExtension
 		$this->tplFolder	= impeesaHelper::dirUp(1, dirname(__FILE__))."template/acp/";
 	}
 	
-	/**
-	 * (non-PHPdoc)
-	 * @see lib/implements/IExtension#getContent($contentId)
-	 */
 	public function getContent($contentId)
 	{
 		global $param;

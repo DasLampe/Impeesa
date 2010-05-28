@@ -13,6 +13,7 @@ class resourceController
 
 		if(file_exists(PATH_MAIN.$file))
 		{
+			global $param;
 			if(isset($_SERVER['HTTP_REFERER']))
 			{
 				$referer	= $_SERVER['HTTP_REFERER'];
@@ -24,17 +25,22 @@ class resourceController
 			 header("Content-Type: ".$type);
 			 //readfile(PATH_MAIN.$file); ---> Old Way
 			 $content		= file_get_contents(PATH_MAIN.$file);
+			 /**
+			  * @TODO: Elegante Lösung für Param3 finden (Hack für impeesaPicture)
+			  */
 			 $search		= array(
 			 						"%IMPEESA_MAIN_LINK%",
 			 						"%IMPEESA_CSS_LINK%",
 			 						"%IMPEESA_PARENT%",
-			 						"%IMPEESA_SESSIONID%"
+			 						"%IMPEESA_SESSIONID%",
+			 						"%IMPEESA_PARAM3%"
 			 						);
 			 $replace		= array(
 			 						LINK_MAIN,
 			 						LINK_CSS,
 			 						$referer,
-			 						session_id()
+			 						session_id(),
+			 						$_SESSION['impeesaPicture_dirName']
 			 						);
 			 $content		= str_replace($search, $replace, $content);
 			 echo $content;

@@ -5,7 +5,7 @@
 // +----------------------------------------------------------------------+
 include_once(impeesaHelper::dirUp(1, dirname(__FILE__))."impeesaNews.class.php");
 
-class impeesaNewsAll extends impeesaNews implements IExtension
+class impeesaNewsAll extends impeesaNews
 {
 	public function getContent($tagId=0)
 	{

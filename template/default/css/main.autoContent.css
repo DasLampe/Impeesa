@@ -7,20 +7,20 @@
 
 .error p:before
 {
-	content: url("/resource/template-default-img-error_32x32.png");
+	content: url("%IMPEESA_MAIN_LINK%resource/template-default-img-error_32x32.png");
 }
 
 .success p:before
 {
-	content: url("/resource/template-default-img-success_32x32.png");
+	content: url("%IMPEESA_MAIN_LINK%resource/template-default-img-success_32x32.png");
 }
 
 .warning p:before
 {
-	content: url("/resource/template-default-img-warning_32x32.png");
+	content: url("%IMPEESA_MAIN_LINK%resource/template-default-img-warning_32x32.png");
 	float: left;
 }
 
 .linkDel:before {
-	content: url("/resource/template-default-img-delete_10x10.png");
+	content: url("%IMPEESA_MAIN_LINK%resource/template-default-img-delete_10x10.png");
 }

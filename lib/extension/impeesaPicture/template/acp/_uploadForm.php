@@ -5,8 +5,15 @@
 // +----------------------------------------------------------------------+
 //Script from: http://www.swfupload.org/
 ?>
+<p>
+Bitte beim Upload dadrauf achten, dass die Bilder...
+</p>
+<ul>
+	<li>...im JPG-Format sind</li>
+	<li>...unter 2 MB groß sind</li>
+	<li>...wenn möglich die Abmessung 640x480 oder 360x480 haben.(BreitexHöhe)</li>
+</ul>
 <form id="form1" action="index.php" method="post" enctype="multipart/form-data">
-	<input id="dir" type="text" name="ordner" value="Ordner" />
 	<div class="fieldset flash" id="fsUploadProgress1">
 		Bilder hochladen
 	</div>

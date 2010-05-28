@@ -12,10 +12,6 @@ class impeesaPictureAcp
 		$this->tplFolder	= impeesaHelper::dirUp(1, dirname(__FILE__))."template/acp/";
 	}
 	
-	/**
-	 * (non-PHPdoc)
-	 * @see lib/implements/IExtension#getContent($contentId)
-	 */
 	public function getContent($contentId)
 	{
 		global $param;
@@ -29,10 +25,11 @@ class impeesaPictureAcp
 		{
 			return $this->uploadPicture();
 		}
-		elseif($param[2] == "edit" && impeesaUserRights::hasRights($_SESSION['userId'], impeesaHelper::getSiteId($param[1]), 3))
+		elseif($param[2] == "editPicture" && impeesaUserRights::hasRights($_SESSION['userId'], impeesaHelper::getSiteId($param[1]), 3))
 		{
 			return $this->editPicture();
 		}
+		
 		if($rightFail	=== true)
 		{
 			return impeesaException::error('no_rights');
@@ -74,6 +71,7 @@ class impeesaPictureAcp
 	{
 		$tpl	= impeesaTemplate::getInstance();
 		
+		$tpl->addCss("pictureAcp.css", "lib-extension-impeesaPicture-template-css-");
 		$tpl->vars("LINK_SITE", LINK_MAIN.$_GET['get']);
 		$tpl->vars("galerieOption",		$this->getGalerie());
 		$tpl->addJS("pictureAcp", "lib-extension-impeesaPicture-template-js-");
@@ -83,40 +81,22 @@ class impeesaPictureAcp
 	
 	private function uploadPicture()
 	{
+		global $param;
 		$tpl	= impeesaTemplate::getInstance();
-		$db		= impeesaDB::getConnection();
-		
-		$db->exec("INSERT INTO ".MYSQL_PREFIX."picture
-				(test)
-				VALUES
-				('".$_POST['submit']."')");
 		
 		if(!isset($param[3]) || $param[3] != "upload")
 		{
-			$tpl->addJs("swfupload", "lib-extension-impeesaPicture-lib-swfupload-");
-			$tpl->addJs("swfupload.queue", "lib-extension-impeesaPicture-lib-js-");
-			$tpl->addJs("fileprogress", "lib-extension-impeesaPicture-lib-js-");
-			$tpl->addJs("handlers", "lib-extension-impeesaPicture-lib-js-");
-			$tpl->addJs("_uploadConfig", "lib-extension-impeesaPicture-lib-");			
+			$_SESSION['impeesaPicture_dirName']		= $param[3];
+			$tpl->addJs("swfupload",		"lib-extension-impeesaPicture-lib-swfupload-");
+			$tpl->addJs("swfupload.queue",	"lib-extension-impeesaPicture-lib-js-");
+			$tpl->addJs("fileprogress", 	"lib-extension-impeesaPicture-lib-js-");
+			$tpl->addJs("handlers", 		"lib-extension-impeesaPicture-lib-js-");
+			$tpl->addJs("_uploadConfig", 	"lib-extension-impeesaPicture-lib-");
+			$tpl->addCss("pictureAcp.css",		"lib-extension-impeesaPicture-template-css-");	
 			
 			$tpl->vars("form", $tpl->load("_uploadForm", 0, $this->tplFolder));
 			
-			$db->exec("INSERT INTO ".MYSQL_PREFIX."picture
-						(test)
-						VALUES
-						('FAIL!!')");
 			return $tpl->load("upload", 0, $this->tplFolder);
-		}
-		else
-		{
-			/**
-			 * @TODO: Überprüfen ob es eie möglichkeit gibt, einen Ordner einzutragen in welchen die Bilder geladen werden! index.php beachten
-			 * @var unknown_type
-			 */
-			$db->exec("INSERT INTO ".MYSQL_PREFIX."picture
-						(test)
-						VALUES
-						('OK!')");
 		}
 	}
 	
@@ -140,7 +120,7 @@ class impeesaPictureAcp
 			}
 			else
 			{
-				if(mkdir(PATH_PICTURE.$_POST['newDirYear'].'_'.$newDir) === true)
+				if(mkdir(PATH_PICTURE.$_POST['newDirYear'].'_'.$newDir, 0777) === true)
 				{
 					$array	= array("msg"		=> "Ordner wurder erfolgreich erstellt!",
 									"dir"		=> $_POST['newDirYear'].'_'.$newDir,
@@ -159,8 +139,11 @@ class impeesaPictureAcp
 	
 	private function editPicture()
 	{
+		global $param;
 		$tpl	= impeesaTemplate::getInstance();
-		if($_POST['action'] == "getGalerie")
+		$tpl->vars("LINK_SITE",		LINK_MAIN.$_GET['get']);
+				
+		if(isset($_POST['action']) && $_POST['action'] == "getGalerie")
 		{
 			if(file_exists(PATH_PICTURE.$_POST['dir']))
 			{ //Wenn Ordner existiert
@@ -184,8 +167,10 @@ class impeesaPictureAcp
 					/* Bilder ausgeben */
 					for($x=0;$x<count($bilder);$x++)
 					{
-						$tpl->vars("picture",	LINK_MAIN."picture/".$bilder[$x]);
+						$tpl->vars("picture",	LINK_MAIN."picture/".$_POST['dir'].'/'.$bilder[$x]);
 						$tpl->vars("thumbmail",	"lib/extension/impeesaPicture/lib/thumb.php?dir=".$_POST['dir']."&pic=".$bilder[$x]);
+						$tpl->vars("pictureName",	$bilder[$x]);
+						$tpl->vars("dirName",		$_POST['dir']);
 						$picture	.= $tpl->load("_pictureBlock", 0, $this->tplFolder);
 					}
 					
@@ -199,6 +184,12 @@ class impeesaPictureAcp
 				}
 				return $array;
 			}
+		}
+		elseif(isset($param[3]) && $param[3] == "del")
+		{
+			/**
+			 * @TODO: Funktion zum löschen schreiben!
+			 */
 		}
 	}
 	
@@ -223,6 +214,7 @@ class impeesaPictureAcp
 	private function getGalerie()
 	{
 		$tpl	= impeesaTemplate::getInstance();
+				
 		/* Ordner auslesen */
 		$jahr		= '';
 		$handle		= opendir(PATH_PICTURE);

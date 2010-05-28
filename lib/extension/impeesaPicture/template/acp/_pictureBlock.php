@@ -4,4 +4,9 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<img src="{LINK_MAIN}{thumbmail}" border="0" />
+<div id="pictureBlock">
+	<img src="{LINK_MAIN}{thumbmail}" border="0" />
+	<div class="pictureOption">
+		<a href="{LINK_SITE}del/{dirName}/{pictureName}" class="linkDel">Löschen</a>
+	</div>
+</div>

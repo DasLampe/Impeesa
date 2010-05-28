@@ -3,7 +3,7 @@
 // | Copyright (c) 2010 DasLampe <dasLampe@lano-crew.org> |
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
-class impeesaUserInfo implements IExtension
+class impeesaUserInfo
 {
 	public function getContent($contentId)
 	{

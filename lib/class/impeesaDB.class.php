@@ -3,7 +3,6 @@
 // | Copyright (c) 2010 DasLampe <andre@lano-crew.org> |
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
-include_once("../config/database.conf.php");
 
 class ImpeesaDb {
 	private static $db = NULL;
