@@ -6,6 +6,7 @@
 require_once(impeesaHelper::dirUp(1, dirname(__FILE__))."impeesaNews.class.php");
 
 class impeesaNewsAcp extends impeesaNews
+{
 	private $tplFolder;
 	
 	public function __construct()
@@ -382,15 +383,15 @@ class impeesaNewsAcp extends impeesaNews
 		$result->bindParam(':newsId',	$newsId);
 		$result->execute();
 		
-		for($x=0;$x<count($tags);$x++)
+		foreach($tags as $tag)
 		{
-			$tags[$x]	= trim($tags[$x]);
+			$tag	= trim($tag);
 
 			//Id von Tag holen
 			$result	= $db->prepare("SELECT id
 									FROM ".MYSQL_PREFIX."newsTags
 									WHERE name LIKE :tag");
-			$result->bindParam(':tag', $tags[$x]);
+			$result->bindParam(':tag', $tag);
 			$result->execute();
 			$row	= $result->fetch(PDO::FETCH_ASSOC);
 			
@@ -401,7 +402,7 @@ class impeesaNewsAcp extends impeesaNews
 										(name)
 										VALUES
 										(:tagName)");
-				$insert->bindParam(":tagName",	$tags[$x]);
+				$insert->bindParam(":tagName",	$tag);
 				$insert->execute();
 				$row['id']	= $db->lastInsertId();
 			}

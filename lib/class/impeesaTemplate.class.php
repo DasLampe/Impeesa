@@ -114,13 +114,10 @@ class impeesaTemplate
 	private function replace_vars()
 	{
 		if(!empty($this->vars))
-		{
-			$array_key = array_keys($this->vars);
-			$array_value = array_values($this->vars);
-	 
-			for($x=0;$x<count($array_key);$x++)
+		{	 
+			foreach($this->vars as $var_key => $var_value)
 			{
-				$this->templateLoad = str_replace($this->leftDelimiter.$array_key[$x].$this->rightDelimiter, $array_value[$x], $this->templateLoad);
+				$this->templateLoad = str_replace($this->leftDelimiter.$var_key.$this->rightDelimiter, $var_value, $this->templateLoad);
 			}
 		}
 	}

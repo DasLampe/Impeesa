@@ -55,9 +55,9 @@ class acpController
 		
 		$pageElemente	= $this->getPageElements();
 		$content		= "";
-		for($x=0;$x<count($pageElemente);$x++)
+		foreach($pageElemente as $pageElement)
 		{
-			$content	.= $this->getElement($pageElemente[$x][0]);	
+			$content	.= $this->getElement($pageElement[0]);	
 		}
 				
 		$tpl->vars("content",	$content);

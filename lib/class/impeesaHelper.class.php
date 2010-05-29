@@ -160,4 +160,22 @@ class impeesaHelper
 
 		return $string;
 	}
+	
+	public static function convertPictureDir($name, $action="encode")
+	{		
+		/* Konfiguration */
+		$system	= array('_','oe','ae','ue','Oe','Ae','Ue',);
+		$user	= array(' ','ö','ä','ü','Ö','Ä','Ü');
+		
+		if($action == "decode")
+		{
+			$name	= str_replace($system, $user, $name);		
+		}
+		elseif($action == "encode")
+		{
+			$name	= str_replace($user, $system, $name);
+		}
+		
+		return $name;					
+	}
 }

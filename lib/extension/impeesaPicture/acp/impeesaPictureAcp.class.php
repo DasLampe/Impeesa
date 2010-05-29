@@ -163,18 +163,18 @@ class impeesaPictureAcp
 				
 				if(!empty($bilder))
 				{
-					$picture	= "";
+					$pictures	= "";
 					/* Bilder ausgeben */
-					for($x=0;$x<count($bilder);$x++)
+					foreach($bilder as $picture)
 					{
-						$tpl->vars("picture",	LINK_MAIN."picture/".$_POST['dir'].'/'.$bilder[$x]);
-						$tpl->vars("thumbmail",	"lib/extension/impeesaPicture/lib/thumb.php?dir=".$_POST['dir']."&pic=".$bilder[$x]);
-						$tpl->vars("pictureName",	$bilder[$x]);
+						$tpl->vars("picture",	LINK_MAIN."picture/".$_POST['dir'].'/'.$picture);
+						$tpl->vars("thumbmail",	"lib/extension/impeesaPicture/lib/thumb.php?dir=".$_POST['dir']."&pic=".$picture);
+						$tpl->vars("pictureName",	$picture);
 						$tpl->vars("dirName",		$_POST['dir']);
-						$picture	.= $tpl->load("_pictureBlock", 0, $this->tplFolder);
+						$pictures	.= $tpl->load("_pictureBlock", 0, $this->tplFolder);
 					}
 					
-					$array	= array("msg"		=> $picture,
+					$array	= array("msg"		=> $pictures,
 									"status"	=> true);
 				}
 				else
@@ -185,30 +185,23 @@ class impeesaPictureAcp
 				return $array;
 			}
 		}
-		elseif(isset($param[3]) && $param[3] == "del")
+		elseif((isset($param[3]) && $param[3] == "del") && impeesaUserRights::hasRights($_SESSION['userId'], impeesaHelper::getSiteId($param[1]), 3))
 		{
-			/**
-			 * @TODO: Funktion zum löschen schreiben!
-			 */
+			if(file_exists(PATH_PICTURE.$param[4]) && is_dir(PATH_PICTURE.$param[4]) && file_exists(PATH_PICTURE.$param[4].'/'.$param[5]))
+			{
+				unlink(PATH_PICTURE.$param[4].'/'.$param[5]);
+				
+				$array		= array("msg"		=> "Löschen des Bildes erfolgreich!",
+									"status"	=> true);
+			}
+			else
+			{
+				$array	= array("msg"		=> "Löschen des Bildes fehlgeschlagen!",
+								"status"	=> false);
+			}
+			
+			return $array;
 		}
-	}
-	
-	private function convertPictureDir($name, $action="encode")
-	{		
-		/* Konfiguration */
-		$system	= array('_','oe','ae','ue','Oe','Ae','Ue',);
-		$user	= array(' ','ö','ä','ü','Ö','Ä','Ü');
-		
-		if($action == "decode")
-		{
-			$name	= str_replace($system, $user, $name);		
-		}
-		elseif($action == "encode")
-		{
-			$name	= str_replace($user, $system, $name);
-		}
-		
-		return $name;					
 	}
 	
 	private function getGalerie()
@@ -228,7 +221,7 @@ class impeesaPictureAcp
 					#$bilder_daten[$dir_anz[0]][]	= array("jahr"=>$dir_anz[0]);
 					$jahr	= $dir_anz[0];
 				}
-				$dir_anz[1]	= $this->convertPictureDir($dir_anz[1], "decode");
+				$dir_anz[1]	= impeesaHelper::convertPictureDir($dir_anz[1], "decode");
 				
 				$bilder_daten[$jahr][]	= array("dir" => $dir, "dir_anz" => $dir_anz[1]);
 			}
@@ -239,11 +232,11 @@ class impeesaPictureAcp
 		$galerieOption	= "";
 		foreach($bilder_daten as $bilderjahr=>$value)
 		{
-			for($x=0;$x<count($value);$x++)
+			foreach($value as $info)
 				{
-					$tpl->vars("value", 		$value[$x]['dir']);
+					$tpl->vars("value", 		$info['dir']);
 					$tpl->vars("year",			$bilderjahr);
-					$tpl->vars("description",	$value[$x]['dir_anz']);
+					$tpl->vars("description",	$info['dir_anz']);
 
 					$galerieOption	.= $tpl->load("_galerieOption", 0, $this->tplFolder);
 				}

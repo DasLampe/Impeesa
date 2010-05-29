@@ -63,6 +63,9 @@ class resourceController
 			case "jpg":
 				$type = "image/jpg";
 				break;
+			case "gif":
+				$type = "image/gif";
+				break;		
 			case "png":
 				$tpye = "image/png";
 				break;

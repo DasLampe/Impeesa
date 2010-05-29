@@ -34,17 +34,19 @@ class impeesaAppHelper
 	public static function getExtensionClass($extensionPath)
 	{
 		$extensionClassArray	= explode("/", $extensionPath);
+		
 		for($x=1;$x<count($extensionClassArray)-1;$x++)
 		{
 			$extensionClassArray[$x]	= ucfirst($extensionClassArray[$x]);
 		}
-		$extensionClass		= "";
-		for($x=0;$x<count($extensionClassArray)-1;$x++)
+		
+		$extensionClasses		= "";
+		foreach($extensionClassArray as $extensionClass)
 		{
-			$extensionClass	.= $extensionClassArray[$x];
+			$extensionClasses	.= $extensionClass;
 		}
 		
-		return $extensionClass;
+		return $extensionClasses;
 	}
 	
 	/**
@@ -56,9 +58,9 @@ class impeesaAppHelper
 		$tpl	= impeesaTemplate::getInstance();
 		
 		$css	= "";
-		for($x=0; $x<count($tpl->css);$x++)
+		foreach($tpl->css as $cssFile)
 		{
-			$tpl->vars("css_file", $tpl->css[$x]);
+			$tpl->vars("css_file", $cssFile);
 			$css	.=	$tpl->load("_css", 0);
 		}
 		
@@ -74,9 +76,9 @@ class impeesaAppHelper
 		$tpl	= impeesaTemplate::getInstance();
 		
 		$js		= "";
-		for($x=0;$x<count($tpl->js);$x++)
+		foreach($tpl->js as $jsFile)
 		{
-			$tpl->vars("js_file", $tpl->js[$x]['file'].".js");
+			$tpl->vars("js_file", $jsFile['file'].".js");
 			$js		.= $tpl->load("_js", 0);
 		}
 		return $js;

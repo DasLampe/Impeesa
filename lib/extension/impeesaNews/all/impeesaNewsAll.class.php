@@ -31,11 +31,13 @@ class impeesaNewsAll extends impeesaNews
 	{
 		$db			= ImpeesaDb::getConnection();
 		
-		$result		= $db->query("SELECT newsId
+		$result		= $db->prepare("SELECT newsId
 								FROM ".MYSQL_PREFIX."newsTagAffiliation
 								JOIN ".MYSQL_PREFIX."news
-								WHERE ".MYSQL_PREFIX."newsTagAffiliation.tagId = '".$tagId."'
+								WHERE ".MYSQL_PREFIX."newsTagAffiliation.tagId = :tagId
 								ORDER BY ".MYSQL_PREFIX."news.startDate DESC, ".MYSQL_PREFIX."news.id DESC");
+		$result->bindParam(":tagId",		$tagId);
+		$result->execute();
 		
 		$news		= "";
 		

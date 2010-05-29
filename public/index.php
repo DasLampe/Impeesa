@@ -119,7 +119,7 @@ elseif(isset($param[0]) && $param[0]=="resource")
 elseif(isset($param[0]) && $param[0] == "picture")
 {
 	include_once(PATH_CONTROLLER."resourceController.class.php");
-	new resourceController("upload-picture-".$param[1]);
+	new resourceController("upload-picture-".$param[1]."-".$param[2]);
 }
 elseif(!isset($_GET['get']))
 {
@@ -127,6 +127,7 @@ elseif(!isset($_GET['get']))
 }
 else
 {
+	header("HTTP/1.1 404 NOT FOUND");
 	echo 'Es konnte keine Seite aufgerufen werden!<br>Fehlermeldung senden!';
 }
 ?>
