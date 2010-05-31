@@ -110,7 +110,7 @@ class impeesaPictureAcp
 		}
 		else
 		{
-			$newDir		= $this->convertPictureDir($_POST['newDir'], "encode");
+			$newDir		= impeesaHelper::convertPictureDir($_POST['newDir'], "encode");
 			
 			if(file_exists(PATH_PICTURE.$_POST['newDirYear'].'_'.$newDir))
 			{
@@ -134,6 +134,46 @@ class impeesaPictureAcp
 					return $array;
 				}
 			}
+		}
+	}
+	
+	private function delDir()
+	{
+		global $param;
+		
+		if(file_exists(PATH_PICTURE.$param[3]) && is_dir(PATH_PICTURE.$param[3]) && impeesaUserRights::hasRights($_SESSION['userId'], impeesaHelper::getSiteId($param[1]), 3))
+		{
+			$this->delDirRecursiv(PATH_PICTURE.$param[3]);
+			
+			$array	= array("msg"		=> "Order erfolgreich gelöscht!",
+							"status"	=> true);
+		}
+		else
+		{
+			$array	= array("msg"		=> "Fehler beim löschen",
+							"status"	=> false);			
+		}
+		
+		return $array;
+	}
+	
+	private function delDirRecursiv($dir)
+	{
+		$files = glob( $dir . '*', GLOB_MARK );
+		foreach( $files as $file )
+		{
+			if( is_dir( $file ) )
+			{
+				$this->delDirRecursiv( $file );
+			}
+			else
+			{
+				unlink( $file );
+			}
+		}
+		if (is_dir($dir))
+		{
+			rmdir( $dir );	
 		}
 	}
 	

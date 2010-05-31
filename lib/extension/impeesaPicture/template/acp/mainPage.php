@@ -16,6 +16,8 @@ Leider kann dieses Tool nur mit Javascript benutzt werden!
 		{galerieOption}
 	</select>
 	<a href="" style="display:none;" name="uploadLink">Bilder Upload</a>
+	&nbsp;|&nbsp;
+	<a href="" style="display:none;" name="delDir">Ordner löschen</a>
 	<input type="hidden" name="uploadUrl" value="{LINK_SITE}/" />
 	<br/>
 	<strong>ODER</strong>
