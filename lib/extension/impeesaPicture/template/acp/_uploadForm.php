@@ -13,13 +13,25 @@ Bitte beim Upload dadrauf achten, dass die Bilder...
 	<li>...unter 2 MB groß sind</li>
 	<li>...wenn möglich die Abmessung 640x480 oder 360x480 haben.(BreitexHöhe)</li>
 </ul>
-<form id="form1" action="index.php" method="post" enctype="multipart/form-data">
-	<div class="fieldset flash" id="fsUploadProgress1">
-		Bilder hochladen
-	</div>
-	<div style="padding-left: 5px;">
-		<span id="spanButtonPlaceholder1"></span>
-		<input id="btnCancel1" type="button" value="Cancel Uploads" onclick="cancelQueue(upload1);" disabled="disabled" style="margin-left: 2px; height: 22px; font-size: 8pt;" />
-		<br />
-	</div>
-</form>
+	<applet
+			title="JUpload"
+			name="JUpload"
+			code="com.smartwerkz.jupload.classic.JUpload"
+			codebase="."
+			archive="{LINK_MAIN}resource/lib-extension-impeesaPicture-lib-jupload-dist-jupload.jar,
+					{LINK_MAIN}resource/lib-extension-impeesaPicture-lib-jupload-dist-commons_codec_1.3.jar,
+					{LINK_MAIN}resource/lib-extension-impeesaPicture-lib-jupload-dist-commons_httpclient_3.0_rc4.jar,
+					{LINK_MAIN}resource/lib-extension-impeesaPicture-lib-jupload-dist-commons_logging.jar,
+					{LINK_MAIN}resource/lib-extension-impeesaPicture-lib-jupload-dist-skinlf-skinlf_6.2.jar"
+			width="640"
+			height="480"
+			mayscript="mayscript"
+			alt="JUpload by www.jupload.biz">
+	
+		<param name="Config" value="{LINK_MAIN}resource/lib-extension-impeesaPicture-lib-jupload-cfg-jupload.default.config">
+	
+		Your browser does not support Java Applets or you disabled Java Applets in your browser-options.
+		To use this applet, please install the newest version of Sun's Java Runtime Environment (JRE).
+		You can get it from <a href="http://www.java.com/">java.com</a>
+	
+	</applet>
