@@ -87,11 +87,6 @@ class impeesaPictureAcp
 		if(!isset($param[3]) || $param[3] != "upload")
 		{
 			$_SESSION['impeesaPicture_dirName']		= $param[3];
-			$tpl->addJs("swfupload",		"lib-extension-impeesaPicture-lib-swfupload-");
-			$tpl->addJs("swfupload.queue",	"lib-extension-impeesaPicture-lib-js-");
-			$tpl->addJs("fileprogress", 	"lib-extension-impeesaPicture-lib-js-");
-			$tpl->addJs("handlers", 		"lib-extension-impeesaPicture-lib-js-");
-			$tpl->addJs("_uploadConfig", 	"lib-extension-impeesaPicture-lib-");
 			$tpl->addCss("pictureAcp.css",		"lib-extension-impeesaPicture-template-css-");	
 			
 			$tpl->vars("form", $tpl->load("_uploadForm", 0, $this->tplFolder));
