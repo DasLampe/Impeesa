@@ -21,6 +21,10 @@ if($row['id'])
 {
 	foreach($_FILES as $tagName => $fileInfo)
 	{
+
+		//Prefix für jedes Bild erstellen
+		$fileInfo['name']	= '9999'.$fileInfo['name'];
+		
 		if(!file_exists(PATH_PICTURE.$_GET['dirName'].'/'.$fileInfo['name']))
 		{
 			//Ist Datei erlaubt?
@@ -66,14 +70,14 @@ if($row['id'])
 					//Führe Datei upload aus
 					move_uploaded_file($fileInfo['tmp_name'], PATH_PICTURE.$_GET['dirName'].'/'.$fileInfo['name']);
 				}
-				header("HTTP/1.1 200 OK");
-				return true;
+				//header("HTTP/1.1 200 OK");
+				//return true;
 			}
 			else
 			{
-				header("HTTP/1.1 500 File Upload Error");
-				echo 'Angebene Datei nicht erlaubt!';
-				exit(0);
+				//header("HTTP/1.1 500 File Upload Error");
+				//echo 'Angebene Datei nicht erlaubt!';
+				//exit(0);
 			}
 		}
 	}
