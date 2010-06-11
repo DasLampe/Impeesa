@@ -96,3 +96,11 @@ body, html {
 	margin-top: 10px;
 	padding-right: 10px;
 }
+
+#dialog-action
+{
+	position: fixed;
+	top:0px;
+	width: 100%;
+	z-index:99;
+}

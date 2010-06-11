@@ -8,6 +8,6 @@
 
 .newsBox
 {
-	background-image: url("/resource/template-default-img-boxContent.png");
+	background-image: url("%IMPEESA_MAIN_LINK%resource/template-default-img-boxContent.png");
 	background-repeat: repeat-x;
 }

@@ -279,4 +279,28 @@ class impeesaPictureAcp
 		
 		return $galerieOption;
 	}
+	
+	private function editPosition()
+	{
+		if(file_exists(PATH_PICTURE.$_POST['dir'].'/'.$_POST['now']))
+		{
+			$newName	= substr($_POST['next'],0,4);
+			$newName	= $newName - 1;
+			$newName	= str_replace(substr($_POST['next'], 0,4), $newName, $_POST['next']);
+			rename(PATH_PICTURE.$_POST['dir'].'/'.$_POST['now'], PATH_PICTURE.$_POST['dir'].'/'.$newName);
+			
+			$array		= array("msg"		=> "Verschiebung gespeichert!",
+								"newName"	=> $newName,
+								"newThumb"	=> LINK_MAIN.'lib/extension/impeesaPicture/lib/thumb.php?dir='.$_POST['dir'].'&pic='.$newName,
+								"status"	=> true);
+		}
+		else
+		{
+		 	$array		= array("msg"		=> "Fehler beim Speichern",
+		 						"newName"	=> $_POST['now'],
+		 						"newThumb"	=>  LINK_MAIN.'lib/extension/impeesaPicture/lib/thumb.php?dir='.$_POST['dir'].'&pic='.$_POST['now'],
+		 						"status"	=> false); 
+		}
+		return $array;
+	}
 }

@@ -33,5 +33,6 @@ Leider kann dieses Tool nur mit Javascript benutzt werden!
 	<input type="submit" name="submit" value="Erstellen" />
 </form>
 
-<div id="galerie"></div>
+<ul id="galerie">
+</ul>
 </div>

@@ -7,6 +7,13 @@ include_once(impeesaHelper::dirUp(1, dirname(__FILE__))."impeesaNews.class.php")
 
 class impeesaNewsAll extends impeesaNews
 {
+	private $tplFolder;
+	
+	public function __construct()
+	{
+		$this->tplFolder	= impeesaHelper::dirUp(1, dirname(__FILE__))."template/";
+	}
+	
 	public function getContent($tagId=0)
 	{
 		global $param;
@@ -19,12 +26,15 @@ class impeesaNewsAll extends impeesaNews
 		
 		if(!isset($param[2]) || !is_numeric($param[2]) || $param[2]==0)
 		{
-			return $this->getAllNews();
+			$newsBlocks	= $this->getAllNews();
 		}
 		else
 		{
-			return $this->getNewsByTag($param[2]);
+			$newsBlocks	= $this->getNewsByTag($param[2]);
 		}
+		
+		$tpl->vars("newsBlocks",	$newsBlocks);
+		return $tpl->load('newsPage', 0, $this->tplFolder);
 	}
 	
 	private function getNewsByTag($tagId)

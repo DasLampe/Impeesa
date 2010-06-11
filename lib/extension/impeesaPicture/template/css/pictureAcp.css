@@ -1,10 +1,22 @@
 @CHARSET "UTF-8";
 #pictureBlock {
-	width: 45%;
-	float: left;
 	text-align: center;
-	height: 220px;
+}
+
+.pictureListItem {
+	position: relative;
+	display: block;
+	float: left;    
+	list-style-type: none;
+	height: 220px;    
+	width: 45%;    
 	margin: 5px;
+	text-align: center;
+	padding: 5px;
+	background-image: url("%IMPEESA_MAIN_LINK%resource/template-default-img-boxContent.png");
+	background-repeat: repeat-x;
+	border: 1px solid #e3e3e3;
+	-moz-border-radius:10px 10px 10px 10px;
 }
 
 .pictureOption {

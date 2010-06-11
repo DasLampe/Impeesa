@@ -28,3 +28,9 @@
 	background-image: url("%IMPEESA_MAIN_LINK%resource/template-default-img-news_back.png");
 	background-repeat: repeat-x;
 }
+
+.gradient
+{
+	background-image: url("%IMPEESA_MAIN_LINK%resource/template-default-img-boxContent.png");
+	background-repeat: repeat-x;
+}
