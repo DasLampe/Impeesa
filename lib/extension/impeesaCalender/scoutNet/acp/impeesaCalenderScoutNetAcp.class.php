@@ -41,21 +41,20 @@ class impeesaCalenderScoutNetAcp
 	
 	private function getForm()
 	{
+		require_once(impeesaHelper::dirUp(1, dirname(__FILE__)).'calender.func.php');
 		$tpl	= impeesaTemplate::getInstance();
 		
 		$tpl->vars("LINK_SITE",		LINK_MAIN.$_GET['get']);
+		$tpl->vars("calenderId",	getCalenderId());
 		return $tpl->load("editForm", 0, $this->tplFolder);
 	}
 	
 	private function setId($calenderId)
 	{
-		/**
-		 * @TODO: Schreiben funktioniert nicht!!
-		 */
 		$tpl	= impeesaTemplate::getInstance();
 		
 		$file	= fopen(impeesaHelper::dirUp(1, dirname(__FILE__)).'calenderId.conf', 'w');
-		fwrite($calenderId, $file);
+		fwrite($file, $calenderId);
 		fclose($file);
 		
 		$tpl->vars("headline", "Kalender Verwalten");

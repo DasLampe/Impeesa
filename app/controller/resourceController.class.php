@@ -22,6 +22,10 @@ class resourceController
 			{
 				$referer	= LINK_MAIN;
 			}
+			if(!isset($_SESSION['impeesaPicture_dirName']))
+			{
+				$_SESSION['impeesaPicture_dirName'] = "";
+			}
 			 header("Content-Type: ".$type);
 			 //readfile(PATH_MAIN.$file); ---> Old Way
 			 $content		= file_get_contents(PATH_MAIN.$file);

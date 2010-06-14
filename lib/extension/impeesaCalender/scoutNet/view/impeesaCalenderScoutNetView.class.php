@@ -16,34 +16,28 @@ class impeesaCalenderScoutNetView
 	{
 		global $param;
 		$tpl			= impeesaTemplate::getInstance();
+		require_once(impeesaHelper::dirUp(1, dirname(__FILE__)).'calender.func.php');
 		
-		if(isset($param[2]) && is_numeric($param[2]))
-		{
-			$appointments	= $this->getAppointments($param[2]);
+		$appointments	= $this->getAppointments(getCalenderId());
 	
-			$appointmentsBlock	= "";
-			foreach($appointments as $appointment)
+		$appointmentsBlock	= "";
+		foreach($appointments as $appointment)
+		{
+			$startDate	= $this->getDate($appointment->SDate);
+			$endDate	= $this->getDate($appointment->EDate);
+			if($this->getMktime($appointment->EDate) > time())
 			{
-				$startDate	= $this->getDate($appointment->SDate);
-				$endDate	= $this->getDate($appointment->EDate);
-				if($this->getMktime($appointment->EDate) > time())
-				{
-					$tpl->vars("startDate",			$startDate);
-					$tpl->vars("endDate",			$endDate);
-					$tpl->vars("appointmentId",		$appointment->Id);
-					$tpl->vars("title",				$appointment->Title);
-					$tpl->vars("groups",			$appointment->Section);
-					$tpl->vars("category",			$appointment->Category);
-					$tpl->vars("info",				$appointment->Info);
-					
-					$appointmentsBlock	.= $tpl->load("_appointmentBlock", 0, $this->tplFolder);
-				}			
+				$tpl->vars("startDate",			$startDate);
+				$tpl->vars("endDate",			$endDate);
+				$tpl->vars("appointmentId",		$appointment->Id);
+				$tpl->vars("title",				$appointment->Title);
+				$tpl->vars("groups",			$appointment->Section);
+				$tpl->vars("category",			$appointment->Category);
+				$tpl->vars("info",				$appointment->Info);
+				
+				$appointmentsBlock	.= $tpl->load("_appointmentBlock", 0, $this->tplFolder);
 			}
 			$tpl->vars("appointmentsBlock",		$appointmentsBlock);
-		}
-		else
-		{
-			return impeesaException::error('wrong_calenderId');
 		}
 		
 		return $tpl->load("calender", 0, $this->tplFolder);
