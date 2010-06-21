@@ -7,7 +7,7 @@ include_once(impeesaHelper::dirUp(1, dirname(__FILE__))."impeesaNews.class.php")
 
 class impeesaNewsSpecify extends impeesaNews
 {
-	public function getContent($contentId)
+	public function getContent()
 	{
 		global $param;
 		if(isset($param[2]) && is_numeric($param[2]))

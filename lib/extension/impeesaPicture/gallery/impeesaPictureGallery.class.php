@@ -12,7 +12,7 @@ class impeesaPictureGallery
 		$this->tplFolder	= impeesaHelper::dirUp(1, dirname(__FILE__))."template/";
 	}
 	
-	function getContent($contentId)
+	function getContent()
 	{
 		global $param;
 		

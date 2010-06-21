@@ -17,6 +17,8 @@ $(document).ready(function () {
 				error	= true;
 				$('input[name='+name+']')
 						.addClass('inputError');
+				
+				actionDialog("Bitte alle Pflichtfelder ausfüllen!", 'error');
 			}
 		});
 		
@@ -45,9 +47,15 @@ $(document).ready(function () {
 	});
 });
 
-function actionDialog(text)
+function actionDialog(text, status)
 {
+	switch(status)
+	{
+		case 'error':
+			text = ' <span>' + text + '</span>';
+		break;
+	}
 	$('#dialog-action').html(text);
-	$('#dialog-action').show('blind');
+	$('#dialog-action').addClass(status).show('blind');
 	setTimeout("$('#dialog-action').hide('blind')", 5000);
 }

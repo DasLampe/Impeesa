@@ -14,7 +14,7 @@ class impeesaNewsAll extends impeesaNews
 		$this->tplFolder	= impeesaHelper::dirUp(1, dirname(__FILE__))."template/";
 	}
 	
-	public function getContent($tagId=0)
+	public function getContent()
 	{
 		global $param;
 		
@@ -71,8 +71,8 @@ class impeesaNewsAll extends impeesaNews
 
 		$result		= $db->query("SELECT id
 								FROM ".MYSQL_PREFIX."news
-								WHERE endDate > '".time()."'
-									OR endDate = 0
+								WHERE (endDate > '".time()."'
+									OR endDate = 0)
 								ORDER BY startDate DESC, id DESC");
 		$news		= ""; 
 		while($row	= $result->fetch(PDO::FETCH_ASSOC))

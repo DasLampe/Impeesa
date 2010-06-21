@@ -5,7 +5,7 @@
 // +----------------------------------------------------------------------+
 class impeesaUserLogin
 {
-	public function getContent($contentId)
+	public function getContent()
 	{
 		global $param;
 		$tpl	= impeesaTemplate::getInstance();		

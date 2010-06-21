@@ -64,11 +64,10 @@ class ajaxAcpController
 	{
 		$db		= impeesaDB::getConnection();
 		
-		$result			= $db->query("SELECT contenttype, contentid
+		$result			= $db->query("SELECT contenttype
 									FROM ".MYSQL_PREFIX."pageElements
 									WHERE id = '".$elementId."'");
 		$row			= $result->fetch(PDO::FETCH_ASSOC);
-		$contentId		= $row['contentid'];
 				
 		$result	= $db->query("SELECT extensionPath
 								FROM ".MYSQL_PREFIX."contenttype

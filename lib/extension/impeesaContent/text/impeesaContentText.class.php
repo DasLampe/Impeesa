@@ -5,19 +5,22 @@
 // +----------------------------------------------------------------------+
 class impeesaContentText
 {
-	function getContent($contentId)
+	function getContent()
 	{
+		global $param;
 		$db			= impeesaDB::getConnection();
 		$tpl		= impeesaTemplate::getInstance();
 		
-		$result		= $db->query("SELECT headline, content
+		$result		= $db->prepare("SELECT content
 								FROM ".MYSQL_PREFIX."contentText
-								WHERE id = '".$contentId."'");
+								WHERE pageId = :pageId");
+		$result->bindParam(":pageId",	impeesaHelper::getSiteId($param[1]));
+		$result->execute();
+		
 		$row		= $result->fetch(PDO::FETCH_ASSOC);
 		
-		$tpl->vars("headline",			$row['headline']);
-		$tpl->vars("contentBlock",		$row['content']);
+		$tpl->vars("content",		$row['content']);
 
-		return $tpl->load("_defaultPage", 0);
+		return $tpl->load("_content", 0);
 	}
 }

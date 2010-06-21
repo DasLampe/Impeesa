@@ -10,6 +10,10 @@
 	content: url("%IMPEESA_MAIN_LINK%resource/template-default-img-error_32x32.png");
 }
 
+.error span:before {
+	content: url("%IMPEESA_MAIN_LINK%resource/template-default-img-error_16x16.png");
+}
+
 .success p:before
 {
 	content: url("%IMPEESA_MAIN_LINK%resource/template-default-img-success_32x32.png");

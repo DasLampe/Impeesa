@@ -4,6 +4,7 @@ input[type="text"], input[type="password"], textarea {
 	border: 1px solid #000000;
 	-moz-border-radius:10px;
 	margin: 5px;
+	padding-left: 3px;
 }
 
 input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
@@ -24,6 +25,15 @@ label {
 
 fieldset {
 	margin: 5px 5px;
+	border: 1px solid #e3e3e3;
+	-moz-border-radius:10px;
+}
+
+legend {
+	color: #FFFFFF;
+	border: 1px solid;
+	-moz-border-radius:15px;
+	padding: 1px 5px;	
 }
 
 table {
@@ -37,6 +47,10 @@ table {
 	display:none;
 }
 
+.js-hide {
+	display: none;
+}
+
 #dialog-action
 {
 	padding-left: 20px;
@@ -48,4 +62,4 @@ table {
 {
 	border: 1px solid #e3e3e3;
 	-moz-border-radius:0 0 10px 10px;
-}	
+}

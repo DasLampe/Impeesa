@@ -14,7 +14,7 @@ class impeesaNewsAcp extends impeesaNews
 		$this->tplFolder	= impeesaHelper::dirUp(1, dirname(__FILE__))."template/acp/";
 	}
 	
-	public function getContent($contentId)
+	public function getContent()
 	{
 		global $param;
 		$rightFail	= true;

@@ -5,7 +5,7 @@
 // +----------------------------------------------------------------------+
 class impeesaUserInfo
 {
-	public function getContent($contentId)
+	public function getContent()
 	{
 		
 	}

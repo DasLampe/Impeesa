@@ -4,4 +4,4 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-{newsBlocks}
+<li><a href="{LINK_SITE}/edit/{pageId}">{pageTitle} ({siteName})</a></li>

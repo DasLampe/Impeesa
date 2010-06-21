@@ -4,4 +4,6 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-{newsBlocks}
+<label for="modulEnabled">{modulName}</label>
+<input type="checkbox" name="modulEnabled[]" value="{modulId}" {checked} />
+<input type="text" name="modulPosition[{modulId}]" value="{position}" class="js-hide" /><br/><br/>
