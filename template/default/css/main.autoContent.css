@@ -19,6 +19,11 @@
 	content: url("%IMPEESA_MAIN_LINK%resource/template-default-img-success_32x32.png");
 }
 
+.success span:before
+{
+	content: url("%IMPEESA_MAIN_LINK%resource/template-default-img-success_16x16.png");
+}
+
 .warning p:before
 {
 	content: url("%IMPEESA_MAIN_LINK%resource/template-default-img-warning_32x32.png");

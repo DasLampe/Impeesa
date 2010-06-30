@@ -21,15 +21,45 @@ class impeesaContentAcp
 		{
 			$return	= $this->getPageList(0);
 		}
+		elseif((impeesaUserRights::hasRights($_SESSION['userId'], impeesaHelper::getSiteId($param[1]), 2)) && $param[2] == "add")
+		{
+			$return = $this->addPage();
+		}
 		elseif((impeesaUserRights::hasRights($_SESSION['userId'], impeesaHelper::getSiteId($param[1]), 3)) && ($param[2] == "edit" && is_numeric($param[3])))
 		{
 			$return = $this->editPage($param[3]);
+		}
+		elseif((impeesaUserRights::hasRights($_SESSION['userId'], impeesaHelper::getSiteId($param[1]), 3)) && ($param[2] == "del" && is_numeric($param[3])))
+		{
+			$return = $this->delPage($param[3]);
 		}
 
 		$tpl->vars("title",		"Inhalt Verwalten");
 		$tpl->vars("content", $return);
 		
 		return $tpl->load("_defaultAcpPage", 0); 
+	}
+	
+	/**
+	 * Request mit Ajax
+	 * @return string (Template (json))
+	 */
+	public function ajaxRequest()
+	{
+		global $param;
+		
+		if(isset($param[2]) && $param[2] == "del")
+		{
+			define('AJAX', true);
+			$return	= $this->delPage($param[3]);
+			return impeesaHelper::json_encode($return);
+		}
+		else
+		{
+			$array	= array('msg'		=> impeesaException::error("wrong_request"),
+							'status'	=> false);
+			return impeesaHelper::json_encode($array);
+		}
 	}
 	
 	/**
@@ -40,6 +70,8 @@ class impeesaContentAcp
 	{
 		$db		= impeesaDB::getConnection();
 		$tpl	= impeesaTemplate::getInstance();
+		
+		$tpl->addJs("contentAcp", "lib-extension-impeesaContent-acp-template-js-");
 		
 		$result	= $db->prepare("SELECT id, siteName, pageTitle, menuTitle
 								FROM ".MYSQL_PREFIX."pageConfig
@@ -56,8 +88,18 @@ class impeesaContentAcp
 			$pageList	.= $this->getPageList($row['id']);
 		}
 		
-		$tpl->vars("pageListItems", $pageList);
-		return $tpl->load("pageList", 0, $this->tplFolder);
+		/**
+		 * @TODO: Hack, damit keine leeren Elemente entstehen
+		 */
+		if(!empty($pageList))
+		{
+			$tpl->vars("pageListItems", $pageList);
+			return $tpl->load("pageList", 0, $this->tplFolder);
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	/**
@@ -80,6 +122,80 @@ class impeesaContentAcp
 		return $tpl->load("_pageListItem", 0, $this->tplFolder);
 	}
 	
+	private function addPage()
+	{
+		if(!isset($_POST['submit']))
+		{
+			return $this->editPageForm("", "", "", "", "", "", "", "");
+		}
+		else
+		{
+			if(empty($_POST['siteName']) || impeesaHelper::existSite($_POST['siteName']) === true)
+			{
+				return $this->editPageForm("", $_POST['siteName'], $_POST['pageTitle'], $_POST['enabled'], $_POST['topPage'], $_POST['visibleMenu'], $_POST['menuPosition']);
+			}
+			else
+			{
+				$db		= ImpeesaDb::getConnection();
+				$tpl	= impeesaTemplate::getInstance();
+				
+				$enabled	= "1";
+				if(!isset($_POST['enabled']))
+				{
+					$enabled	= '0';
+				}
+				
+				$visibleMenu	= '1';
+				if(!isset($_POST['visibleMenu']))
+				{
+					$visibleMenu	= '0';
+				}
+				
+				$db->beginTransaction();
+				//PageConfig
+				$pageConfig	= $db->prepare("INSERT INTO ".MYSQL_PREFIX."pageConfig
+											(siteName, pageTitle, menuTitle, enabled, toppage, visibleMenu, position)
+											VALUES
+											(:siteName, :pageTitle, :menuTitle, :enabled, :toppage, :visibleMenu, :menuPosition)");
+				$pageConfig->bindParam(":siteName",			$_POST['siteName']);
+				$pageConfig->bindParam(":pageTitle",		$_POST['pageTitle']);
+				$pageConfig->bindParam(":menuTitle",		$_POST['menuTitle']);
+				$pageConfig->bindParam(":enabled",			$enabled);
+				$pageConfig->bindParam(":toppage",			$_POST['topPage']);
+				$pageConfig->bindParam(':visibleMenu',		$visibleMenu);
+				$pageConfig->bindParam(':menuPosition',		$_POST['menuPosition']);
+				$pageConfig->execute();
+				
+				$pageId			= $db->lastInsertId();
+				
+				//ContentText
+				$contentText	= $db->prepare("INSERT INTO ".MYSQL_PREFIX."contentText
+												(content, pageId)
+												VALUES
+												(:content, :pageId)");
+				$contentText->bindParam(":content",			$_POST['content']);
+				$contentText->bindParam(":pageId",			$pageId);
+				$contentText->execute();
+				
+				foreach($_POST['modulEnabled'] as $modulId)
+				{
+					$pageElements	= $db->prepare("INSERT INTO ".MYSQL_PREFIX."pageElements
+											(pageid, contenttype, position)
+											VALUES
+											(:pageId, :contentType, :position)");
+					$pageElements->bindParam(":pageId",		$pageId);
+					$pageElements->bindParam(":contentType",	$modulId);
+					$pageElements->bindParam(":position",		$_POST['modulPosition'][$modulId]);
+					$pageElements->execute();
+				}
+				$db->commit();
+				
+				$tpl->vars("message",	"Seite wurde erfolgreich erstellt!");
+				return $tpl->load("_success", 0);
+			}
+		}
+	}
+	
 	private function editPage($pageId)
 	{
 		$db		= ImpeesaDb::getConnection();
@@ -99,7 +215,7 @@ class impeesaContentAcp
 		{
 			$tpl	= impeesaTemplate::getInstance();
 			
-			if(empty($_POST['siteName']))
+			if(empty($_POST['siteName']) || impeesaHelper::existSite($_POST['siteName']) === true)
 			{
 				return $this->editPageForm($pageId, $_POST['siteName'], $_POST['pageTitle'], $_POST['enabled'], $_POST['topPage'], $_POST['visibleMenu'], $_POST['menuPosition']);
 			}
@@ -123,6 +239,7 @@ class impeesaContentAcp
 				$update	= $db->prepare("UPDATE ".MYSQL_PREFIX."pageConfig SET
 										siteName	= :siteName,
 										pageTitle	= :pageTitle,
+										menuTitle	= :menuTitle,
 										enabled		= :enabled,
 										toppage		= :toppage,
 										visibleMenu	= :visibleMenu,
@@ -130,6 +247,7 @@ class impeesaContentAcp
 										WHERE id	= :pageId");
 				$update->bindParam(":siteName",			$_POST['siteName']);
 				$update->bindParam(":pageTitle",		$_POST['pageTitle']);
+				$update->bindParam(":menuTitle",		$_POST['menuTitle']);
 				$update->bindParam(":enabled",			$enabled);
 				$update->bindParam(":toppage",			$_POST['topPage']);
 				$update->bindParam(':visibleMenu',		$visibleMenu);
@@ -162,10 +280,48 @@ class impeesaContentAcp
 					$insert->execute();
 				}
 				$db->commit();
-				return "Ok!";
+				
+				$tpl->vars("message",	"Seite wurde erfolgreich bearbeitet!");
+				return $tpl->load("_success", 0);
 			}
 		}
 
+	}
+	
+	private function delPage($pageId)
+	{
+		$db		= ImpeesaDb::getConnection();
+		$tpl	= impeesaTemplate::getInstance();
+		
+		$db->beginTransaction();
+		
+		$delete		= $db->prepare("DELETE FROM ".MYSQL_PREFIX."pageConfig WHERE id = :pageId");
+		$delete->bindParam(":pageId",	$pageId);
+		$delete->execute();
+		
+		$delete		= $db->prepare("DELETE FROM ".MYSQL_PREFIX."pageElements WHERE pageid = :pageId");
+		$delete->bindParam(":pageId",	$pageId);
+		$delete->execute();
+		
+		$delete		= $db->prepare("DELETE FROM ".MYSQL_PREFIX."contenttext WHERE pageId = :pageId");
+		$delete->bindParam(":pageId",	$pageId);
+		$delete->execute();
+		
+		$db->commit();
+		
+		$message	= "Seite erfolgreich gelöscht!";
+		
+		if(!defined('AJAX'))
+		{
+			$tpl->vars("message",	$message);
+			return $tpl->load("_success", 0);
+		}
+		else
+		{
+			$array		= array('msg'		=>  $message,
+								'status'	=> true);
+			return $array;
+		}	
 	}
 	
 	
@@ -201,15 +357,14 @@ class impeesaContentAcp
 		return $tpl->load("editForm", 0, $this->tplFolder);
 	}
 	
-	private function getDropDownTopPage($topPage, $pageId)
+	private function getDropDownTopPage($topPage, $pageId="")
 	{
 		$db		= impeesaDB::getConnection();
 		$tpl	= impeesaTemplate::getInstance();
 
 		$result	= $db->prepare("SELECT id, siteName, pageTitle 
 								FROM ".MYSQL_PREFIX."pageConfig
-								WHERE toppage != :pageId
-									AND toppage = '0'
+								WHERE toppage = '0'
 									AND id != :pageId
 									AND isAdminPage != '1'");
 		$result->bindParam(":pageId",	$pageId);

@@ -76,7 +76,7 @@ class impeesaPictureGallery
 		global $param;
 		
 		$tpl	= impeesaTemplate::getInstance();
-		$tpl->addCss("pictureAcp.css",		"lib-extension-impeesaPicture-template-css-");
+		$tpl->addCss("picture.css",		"lib-extension-impeesaPicture-template-css-");
 		$tpl->addJs("jquery.lightbox",		"lib-extension-impeesaPicture-lib-js-");
 		$tpl->addCSS("jquery.lightbox.css",	"lib-extension-impeesaPicture-template-css-");
 		$tpl->addJs("picture",				"lib-extension-impeesaPicture-template-js-");

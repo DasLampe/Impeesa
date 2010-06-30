@@ -5,24 +5,27 @@
 // +----------------------------------------------------------------------+
 class impeesaHelper
 {
-	public static function existSite($sitename)
+	public static function existSite($pageName, $isAdminPage=0)
 	{
 		/**
 		 * @TODO: Bessere Lösung finden
-		 */
+		 *
 		global $param;
 		
 		$isAdminPage 		= 0;
 		if($param[0] == "acp")
 		{
 			$isAdminPage	= 1;
-		}
+		}*/
 		
 		$db		= impeesaDB::getConnection();
-		$result	= $db->query("SELECT id
+		$result	= $db->prepare("SELECT id
 							FROM ".MYSQL_PREFIX."pageConfig
-							WHERE siteName = '".$sitename."'
-								AND isAdminPage = '".$isAdminPage."'");
+							WHERE siteName = :pageName
+								AND isAdminPage = :isAdminPage");
+		$result->bindParam(":pageName",		$pageName);
+		$result->bindParam(":isAdminPage",	$isAdminPage);
+		$result->execute();
 		$row	= $result->fetch(PDO::FETCH_NUM);
 		
 		if(empty($row))

@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+#pictureBlock {
+	text-align: center;
+	display: block;
+	float: left;    
+	height: 220px;    
+	width: 45%;    
+	margin: 5px;
+	padding: 5px;
+	background-image: url("%IMPEESA_MAIN_LINK%resource/template-default-img-boxContent.png");
+	background-repeat: repeat-x;
+	border: 1px solid #e3e3e3;
+	-moz-border-radius:10px 10px 10px 10px;
+}
+
+#pictureBlock img {
+	margin-top: 15px;
+	background-color: red;
+}

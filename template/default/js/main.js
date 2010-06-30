@@ -49,12 +49,8 @@ $(document).ready(function () {
 
 function actionDialog(text, status)
 {
-	switch(status)
-	{
-		case 'error':
-			text = ' <span>' + text + '</span>';
-		break;
-	}
+	text = ' <span>' + text + '</span>';
+	
 	$('#dialog-action').html(text);
 	$('#dialog-action').addClass(status).show('blind');
 	setTimeout("$('#dialog-action').hide('blind')", 5000);

@@ -40,3 +40,8 @@ legend
 	background-image: url("%IMPEESA_MAIN_LINK%resource/template-default-img-news_back.png");
 	background-repeat: repeat-x;
 }
+
+#dialog-action {
+	background-image: url("%IMPEESA_MAIN_LINK%resource/template-default-img-infoBg.png");
+	background-repeat: repeat-x;
+}

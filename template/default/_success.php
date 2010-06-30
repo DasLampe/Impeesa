@@ -1,9 +1,9 @@
 <?php
 // +----------------------------------------------------------------------+
-// | Copyright (c) 2010 DasLampe <andre@lano-crew.org> |
+// | Copyright (c) 2010 DasLampe <dasLampe@lano-crew.org> |
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<li class="subMenu">
-	<a href="{LINK_MENU}" class="submenuLink">{menuTitle}</a>
-</li>
+<p class="success">
+{message}
+</p>

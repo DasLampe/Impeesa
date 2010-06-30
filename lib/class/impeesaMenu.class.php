@@ -43,7 +43,7 @@ class impeesaMenu
 		$menu		= "";
 		while($row	= $result->fetch(PDO::FETCH_ASSOC))
 		{
-			$tpl->vars("LINK_MENU", "content/".$row['siteName']);
+			$tpl->vars("LINK_MENU", LINK_MAIN."content/".$row['siteName']);
 			$tpl->vars("menuTitle",	$row['menuTitle']);
 			$menu	.= $tpl->load("_subMenuLink", 0);
 		}

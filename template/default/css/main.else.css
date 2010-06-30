@@ -12,6 +12,19 @@ input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
 	-moz-box-shadow: 0 0 2px 2px #811725;
 }
 
+input[type="submit"]
+{
+	border: 1px solid #000000;
+	-moz-border-radius: 11px;
+	background-image: url("%IMPEESA_MAIN_LINK%resource/template-default-img-infoBg.png");
+	background-repeat: repeat-x;
+	line-height: 13px;
+	padding: 3px 8px;
+	font-size: 11px !important;
+	font-weight: bold;	
+	color: #FFFFFF;
+}
+
 .inputError {
 	background-color: red;
 }

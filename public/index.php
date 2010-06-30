@@ -75,7 +75,7 @@ elseif(isset($param[0]) && $param[0] == "acp")
 {
 	if(isset($param[1]) && !empty($param[1]) && !isset($_SERVER['HTTP_X_REQUESTED_WITH']))
 	{
-		if($impeesaHelper->existSite($param[1]) === false)
+		if($impeesaHelper->existSite($param[1], 1) === false)
 		{
 			echo $param[1];
 			echo '404 Fehler!';
@@ -88,7 +88,7 @@ elseif(isset($param[0]) && $param[0] == "acp")
 	}
 	elseif(isset($_SERVER['HTTP_X_REQUESTED_WITH']))
 	{
-		if($impeesaHelper->existSite($param[1]) === false)
+		if($impeesaHelper->existSite($param[1], 1) === false)
 		{
 			echo 'Fehler bei der Abfrage!';
 		}
