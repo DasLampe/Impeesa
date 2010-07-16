@@ -28,9 +28,10 @@ $impeesaHelper	= new impeesaHelper();
 /*
  * GET in Array packen
  */
-$param	= explode("/", $_GET['get']);
-
-impeesaDebug::insert();
+if(isset($_GET['get']))
+{
+	$param	= explode("/", $_GET['get']);
+}
 
 /*
  * Eigentlicher Controller

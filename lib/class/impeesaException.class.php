@@ -9,7 +9,7 @@ class impeesaException
 	{
 	}
 	
-	public function error($errorDescription)
+	public static function error($errorDescription)
 	{
 		$tpl	= impeesaTemplate::getInstance();
 		

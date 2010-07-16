@@ -18,7 +18,7 @@ class impeesaContentAcp
 		$tpl	= impeesaTemplate::getInstance();
 		
 		if(!isset($param[2]))
-		{
+		{			
 			$return	= $this->getPageList(0);
 		}
 		elseif((impeesaUserRights::hasRights($_SESSION['userId'], impeesaHelper::getSiteId($param[1]), 2)) && $param[2] == "add")
@@ -33,9 +33,14 @@ class impeesaContentAcp
 		{
 			$return = $this->delPage($param[3]);
 		}
+		
+		$subMenu	= array();
+		$subMenu[]	= array('/', 'Übersicht', '');
+		$subMenu[]	= array('/add', 'Seite hinzufügen', 'linkAdd');
 
 		$tpl->vars("title",		"Inhalt Verwalten");
 		$tpl->vars("content", $return);
+		$tpl->vars("submenu",	impeesaMenu::getCustomSubMenu($subMenu));
 		
 		return $tpl->load("_defaultAcpPage", 0); 
 	}
@@ -188,6 +193,8 @@ class impeesaContentAcp
 					$pageElements->bindParam(":position",		$_POST['modulPosition'][$modulId]);
 					$pageElements->execute();
 				}
+				
+				impeesaLog::insertLog(dirname(__FILE__), "INSERT CONTENT ID:".$pageId);
 				$db->commit();
 				
 				$tpl->vars("message",	"Seite wurde erfolgreich erstellt!");
@@ -279,6 +286,8 @@ class impeesaContentAcp
 					$insert->bindParam(":position",		$_POST['modulPosition'][$modulId]);
 					$insert->execute();
 				}
+				
+				impeesaLog::insertLog(dirname(__FILE__), "UPDATE CONTENT ID:".$pageId);
 				$db->commit();
 				
 				$tpl->vars("message",	"Seite wurde erfolgreich bearbeitet!");
@@ -307,6 +316,7 @@ class impeesaContentAcp
 		$delete->bindParam(":pageId",	$pageId);
 		$delete->execute();
 		
+		impeesaLog::insertLog(dirname(__FILE__), "DELETE CONTENT ID:".$pageId);
 		$db->commit();
 		
 		$message	= "Seite erfolgreich gelöscht!";

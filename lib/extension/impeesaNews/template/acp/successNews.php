@@ -4,7 +4,7 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<h1>News bearbeiten</h1>
+<h2>News bearbeiten</h2>
 <p>
 {successMessage}
 </p>

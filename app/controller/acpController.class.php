@@ -28,7 +28,6 @@ class acpController
 			elseif(impeesaAppHelper::pageEnable($this->siteId) === false)
 			{
 				$tpl->vars("pageContent", "Error404");
-				impeesaDebug::insert('Error404');
 			}
 			else
 			{		
@@ -107,7 +106,7 @@ class acpController
 		
 		
 		$extensionFile	= PATH_EXTENSION.$row['extensionPath'].$extensionClass.'.class.php';
-				
+
 		if(file_exists($extensionFile) && $userRigths->hasRights($_SESSION['userId'], $this->siteId, 1) === true)
 		{
 			include_once($extensionFile);
@@ -117,7 +116,11 @@ class acpController
 		}
 		else
 		{
-			if($userRigths->hasRights($_SESSION['userId'], $row['id']) === false)
+			if(!file_exists($extensionFile))
+			{
+				return impeesaException::error("no_file");
+			}
+			elseif($userRigths->hasRights($_SESSION['userId'], $this->siteId) === false)
 			{
 				return impeesaException::error("no_rigths");				
 			}

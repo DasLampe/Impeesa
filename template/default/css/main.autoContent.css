@@ -33,3 +33,7 @@
 .linkDel:before {
 	content: url("%IMPEESA_MAIN_LINK%resource/template-default-img-delete_10x10.png");
 }
+
+.linkAdd:before {
+	content: url("%IMPEESA_MAIN_LINK%resource/template-default-img-add_10x10.png");
+}

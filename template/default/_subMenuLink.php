@@ -4,6 +4,6 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<li class="subMenu">
-	<a href="{LINK_MENU}" class="submenuLink">{menuTitle}</a>
+<li>
+	<a href="{LINK_MENU}" class="submenuLink {extraClass}">{menuTitle}</a>
 </li>

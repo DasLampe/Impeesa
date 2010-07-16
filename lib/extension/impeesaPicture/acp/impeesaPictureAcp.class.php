@@ -121,6 +121,7 @@ class impeesaPictureAcp
 									"dir"		=> $_POST['newDirYear'].'_'.$newDir,
 									"status"	=> true);
 					return $array;
+					impeesaLog::insertLog(dirname(__FILE__), "CREATE dir".$_POST['newDirYear'].'_'.$newDir);
 				}
 				else
 				{
@@ -142,6 +143,7 @@ class impeesaPictureAcp
 			
 			$array	= array("msg"		=> "Order erfolgreich gelöscht!",
 							"status"	=> true);
+			impeesaLog::insertLog(dirname(__FILE__), "DELETE DIR".$dir);
 		}
 		else
 		{
@@ -301,6 +303,8 @@ class impeesaPictureAcp
 		 						"newThumb"	=>  LINK_MAIN.'lib/extension/impeesaPicture/lib/thumb.php?dir='.$_POST['dir'].'&pic='.$_POST['now'],
 		 						"status"	=> false); 
 		}
+		
+		impeesaLog::insertLog(dirname(__FILE__), "UPDATE position of Picture".$_POST['now']);
 		return $array;
 	}
 }

@@ -4,8 +4,6 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<h1>News Verwalten</h1>
-<a href="{LINK_MAIN}{site}/add">News hinzufügen</a>
 <table class="newsTable acpTable">
 	<thead>
 	<tr>

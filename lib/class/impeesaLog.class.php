@@ -5,13 +5,13 @@
 // +----------------------------------------------------------------------+
 class impeesaLog
 {
-	function insertLog($file, $message, $userId)
+	public static function insertLog($file, $message)
 	{
 		$db		= impeesaDb::getConnection();
 		
 		$db->exec("INSERT INTO ".MYSQL_PREFIX."log
 					(modulFile, logMessage, logTime, userId)
 					VALUES
-					('".$file."', '".$message."', '".time()."', '".$userId."')");
+					('".$file."', '".$message."', '".time()."', '".$_SESSION['userId']."')");
 	}
 }

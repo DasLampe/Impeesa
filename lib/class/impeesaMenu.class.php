@@ -50,4 +50,20 @@ class impeesaMenu
 		
 		return $menu;
 	}
+	
+	public static function getCustomSubMenu($subMenuArray)
+	{
+		$tpl		= impeesaTemplate::getInstance();
+		$return		= "";
+
+		foreach($subMenuArray as $subMenuItem)
+		{
+			$tpl->vars("LINK_MENU", 	LINK_MAIN.impeesaHelper::getPageModule($_GET['get']).$subMenuItem[0]);
+			$tpl->vars("menuTitle",		$subMenuItem[1]);
+			$tpl->vars("extraClass",	$subMenuItem[2]);
+			$return	.= $tpl->load("_subMenuLink", 0);
+		}
+				
+		return $return;
+	}
 }

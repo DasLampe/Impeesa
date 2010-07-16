@@ -16,19 +16,19 @@ class impeesaNewsAcp extends impeesaNews
 	
 	public function getContent()
 	{
+		$tpl	= impeesaTemplate::getInstance();
 		global $param;
-		$rightFail	= true;
 		
 		if(!isset($param[2]) && impeesaUserRights::hasRights($_SESSION['userId'], impeesaHelper::getSiteId($param[1]),1) === true)
 		{
-			return $this->getMainPage();
+			$return	= $this->getMainPage();
 		}
 		elseif(isset($param[2]) && $param[2] == "edit")
 		{
 			if(impeesaUserRights::hasRights($_SESSION['userId'], impeesaHelper::getSiteId($param[1]), 3) === true)
 			{
 				$param[3]	= (int) $param[3];
-				return $this->editNews($param[3]);
+				$return = $this->editNews($param[3]);
 			}
 		}
 		elseif(isset($param[2]) && $param[2] == "add")
@@ -37,11 +37,11 @@ class impeesaNewsAcp extends impeesaNews
 			{
 				if(!isset($_POST['submit']))
 				{
-					return $this->getForm();
+					$return = $this->getForm();
 				}
 				else
 				{
-					return $this->addNews();
+					$return = $this->addNews();
 				}
 			}
 		}
@@ -52,19 +52,23 @@ class impeesaNewsAcp extends impeesaNews
 				if(isset($param[3]))
 				{
 					$param[3]	= (int) $param[3];
-					return $this->delNews($param[3]);
+					$return = $this->delNews($param[3]);
 				}
 			}
 		}
 		else
 		{
-			return impeesaException::error("wrong_url");
+			$return = impeesaException::error("wrong_url");
 		}
 		
-		if($rightFail == true)
-		{
-			return impeesaException::error("no_rights");
-		}
+		$subMenuArray	= array();
+		$subMenuArray[]	= array('', 'Übersicht', '');
+		$subMenuArray[]	= array('/add', 'News hinzufügen', 'linkAdd');
+		
+		$tpl->vars("submenu", impeesaMenu::getCustomSubMenu($subMenuArray));
+		$tpl->vars("title",		"Neuigkeiten Verwalten");
+		$tpl->vars("content", $return);
+		return $tpl->load("_defaultAcpPage", 0);
 	}
 	
 	/**
@@ -213,17 +217,22 @@ class impeesaNewsAcp extends impeesaNews
 									(headline, content, startDate, endDate, newsStatus, permaLink, userId)
 									VALUES
 									(:headline, :content, :startDate, :endDate, :newsStatus, :permaLink, '".$_SESSION['userId']."')");
+			
+			$startDate	= impeesaHelper::getTimestap($_POST['startDate']);
+			$endDate	= impeesaHelper::getTimestap($_POST['endDate']);
+			$permaLink	= impeesaHelper::createPermaLink($_POST['newsHeadline']);
+			
 			$update->bindParam(":headline",		$_POST['newsHeadline']);
 			$update->bindParam(":content",		$_POST['newsContent']);
-			$update->bindParam(":startDate",	impeesaHelper::getTimestap($_POST['startDate']));
-			$update->bindParam(":endDate",		impeesaHelper::getTimestap($_POST['endDate']));
+			$update->bindParam(":startDate",	$startDate);
+			$update->bindParam(":endDate",		$endDate);
 			$update->bindParam(":newsStatus",	$_POST['newsStatus']);
-			$update->bindParam(":permaLink",	impeesaHelper::createPermaLink($_POST['newsHeadline']));
+			$update->bindParam(":permaLink",	$permaLink);
 			$update->execute();
 
 			$this->addNewsTag($tags, $db->lastInsertId());
 			
-			impeesaLog::insertLog(__FILE__, "INSERT NEWS ID: ".$db->lastInsertId(), $_SESSION['userId']);
+			impeesaLog::insertLog(__FILE__, "INSERT NEWS ID: ".$db->lastInsertId());
 			
 			$tpl->vars("successMessage",	"News erfolgreich erstellt!");
 			return $tpl->load("successNews", 0, $this->tplFolder);
@@ -299,7 +308,7 @@ class impeesaNewsAcp extends impeesaNews
 				$update->bindParam(":id",			$_POST['newsId']);
 				$update->execute();				
 				
-				impeesaLog::insertLog(__FILE__, "UPDATE NEWS ID: ".$_POST['newsId'], $_SESSION['userId']);
+				impeesaLog::insertLog(__FILE__, "UPDATE NEWS ID: ".$_POST['newsId']);
 				
 				$tpl->vars("successMessage",	"Das bearbeiten war erfolgreich!");
 				return $tpl->load("successNews", 0, $this->tplFolder);
@@ -317,7 +326,7 @@ class impeesaNewsAcp extends impeesaNews
 		$tpl	= impeesaTemplate::getInstance();
 		
 		$db->exec("DELETE FROM ".MYSQL_PREFIX."news WHERE id = '".$newsId."'");
-		impeesaLog::insertLog(__FILE__, "DELETE NEWS ID:".$newsId, $_SESSION['userId']);
+		impeesaLog::insertLog(__FILE__, "DELETE NEWS ID:".$newsId);
 		
 		$db->exec("DELETE FROM ".MYSQL_PREFIX."newsTagAffiliation WHERE newsId= '".$newsId."'");
 		$this->updateCountNewsTag($newsId);

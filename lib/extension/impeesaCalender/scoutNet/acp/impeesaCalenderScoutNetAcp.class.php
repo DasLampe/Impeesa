@@ -57,6 +57,8 @@ class impeesaCalenderScoutNetAcp
 		fwrite($file, $calenderId);
 		fclose($file);
 		
+		impeesaLog::insertLog(dirname(__FILE__), "UPDATE calederId:".$calenderId);	
+		
 		$tpl->vars("headline", "Kalender Verwalten");
 		$tpl->vars("contentBlock",	'<p class="successful">Id wurde gespeichert!</p>');
 		return $tpl->load("_defaultPage", 0);

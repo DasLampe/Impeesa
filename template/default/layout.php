@@ -25,7 +25,7 @@
 	</div>
 	<div id="content">
 		{if}{submenu} != ""{/if}
-		<ul>
+		<ul id="subMenu">
 			{submenu}
 		</ul>
 		{/endif}

@@ -4,5 +4,5 @@
 // | Encoding:  UTF-8 |
 // +----------------------------------------------------------------------+
 ?>
-<h1>News Editieren</h1>
+<h2>News bearbeiten</h2>
 {editForm}

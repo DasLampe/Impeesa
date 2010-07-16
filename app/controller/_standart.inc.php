@@ -15,8 +15,8 @@ $tpl->addCss("main.autoContent.css");
 $tpl->addCss("main.img.css");
 $tpl->addCss("main.else.css");
 $tpl->addCss("jquery.ui.css");
-$tpl->vars("pageContent", $this->getPage());
 $tpl->vars("submenu",		"");
+$tpl->vars("pageContent", $this->getPage());
 
 if(impeesaHelper::isLogin() === true)
 {
